@@ -1,0 +1,75 @@
+#***********************************************
+#        PROJECT PLANETDOMINOS                 *
+#***********************************************
+#progen.population.init-mode=half&half$$grow=50%,full=0.5
+#progen.population.init-mode=full
+progen.population.init-mode=grow
+progen.population.size=40
+progen.population.init-depth-interval=5,15
+#progen.population.max-nodes=400
+progen.max-generation=100
+
+#***********************************************
+#        FUNCTION SETS and ADFS                *
+#***********************************************
+
+progen.functionSet0=\
+ conditions.AndOperator, conditions.FalseConstant, conditions.FleetInFlightCondition, conditions.Not, conditions.NumFleetsEquals,\
+ conditions.NumFleetsGreaterThan, conditions.NumFleetsLessThan, conditions.NumPlanetsEquals, conditions.NumPlanetsGreaterThan, conditions.NumPlanetsLessThan,\
+ conditions.NumShipEquals, conditions.NumShipGreaterThan, conditions.NumShipLessThan, conditions.OrOperator, conditions.PlayerIDEquals, conditions.TrueConstant,\
+ cuantities.TotalOfFleetsFromPlayer, cuantities.TotalOfPlanetsFromPlayer, cuantities.TotalOfShipsFromPlayer, \
+ orders.IfThenElse, orders.IssueOrderOverwhelm, orders.IssueOrderPercentageOfOrigin, orders.IssueOrderPercentageOfDestination, orders.IssueOrderToNearestPercentageOfOrigin, orders.IssueOrderToNearestPercentageOfDestination,\
+ planetlists.My, planetlists.All, planetlists.Enemy, planetlists.Neutral, planetlists.OwnedBy,\
+ playerIds.MyId, playerIds.PlayerIdWithLessFleets, playerIds.PlayerIdWithLessPlanets, playerIds.PlayerIdWithLessShips, playerIds.PlayerIdWithMoreFleets, playerIds.PlayerIdWithMorePlanets, playerIds.PlayerIdWithMoreShips,\
+ selectors.FastestGrowing, selectors.SlowestGrowing, selectors.Strongest, selectors.Weakest,\
+ percentages.ERCPorcentaje005, percentages.ERCPorcentaje010, percentages.ERCPorcentaje015, percentages.ERCPorcentaje020, percentages.ERCPorcentaje025,\
+ percentages.ERCPorcentaje030,percentages.ERCPorcentaje035,percentages.ERCPorcentaje040,percentages.ERCPorcentaje045,percentages.ERCPorcentaje050,\
+ percentages.ERCPorcentaje055,percentages.ERCPorcentaje060,percentages.ERCPorcentaje065,percentages.ERCPorcentaje070,percentages.ERCPorcentaje075,\
+ percentages.ERCPorcentaje080,percentages.ERCPorcentaje085,percentages.ERCPorcentaje090,percentages.ERCPorcentaje095,percentages.ERCPorcentaje100
+progen.functionSet0.return=List<Order>
+
+progen.total.RPB=1
+
+progen.RPB0.functionSet=0
+
+
+#***********************************************
+#        GENNETICS OPERATORS                   *
+#***********************************************
+
+progen.total.operators=1
+
+progen.gennetic.elitism.size=20%
+
+#progen.gennetic.operator0.class=PointMutation
+#progen.gennetic.operator0.selector = RandomSelector
+#progen.gennetic.operator0.probability=0.25
+#progen.gennetic.operator0.selector.size = 4
+
+#progen.gennetic.operator1.class=TreeMutation
+#progen.gennetic.operator1.probability=0.5
+#progen.gennetic.operator1.selector = Tournament
+#progen.gennetic.operator1.selector.size = 5
+
+progen.gennetic.operator0.class=OnePointCrossover
+progen.gennetic.operator0.probability=1
+progen.gennetic.operator0.selector = RandomSelector
+progen.gennetic.operator0.selector.size = 4
+
+
+#progen.gennetic.operator1.class=StandardCrossover
+#progen.gennetic.operator1.class=TreeMutation
+#progen.gennetic.operator1.probability=0.33
+#progen.gennetic.operator1.selector = Tournament
+#progen.gennetic.operator1.selector.size = 4
+
+#progen.gennetic.operator0.class=Reproduction
+#progen.gennetic.operator0.probability=1
+#progen.gennetic.operator0.selector = Tournament
+#progen.gennetic.operator0.selector.size = 4
+
+
+#***********************************************
+#        OUTPUT CONFIGURATION                  *
+#***********************************************
+#progen.output.experiment=/users/gonzalo/Documents/workspace/11-12/PlanetWars/
