@@ -36,8 +36,9 @@ public class IssueOrderToNearestPercentageOfDestination extends Function {
 		
 		Planetdominos dominos = (Planetdominos) userProgram;
 		
-		if (planetasDestino.size() == 0)
+		if ((planetasDestino.size() == 0) ||(origen == null)){
 			return Collections.EMPTY_LIST;
+		}
 		
 		Planet nearestPlanet = planetasDestino.get(0);
 		int nearestPlanetDistance = dominos.getGame().distance(origen, planetasDestino.get(0));

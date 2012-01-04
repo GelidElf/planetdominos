@@ -17,7 +17,7 @@ public class Not extends NonTerminal{
 	 * Constructor por defecto.
 	 */
 	public Not(){
-		super("boolean$$char", "NOT");
+		super("boolean$$boolean", "NOT");
 	}
 
 	/*
@@ -26,7 +26,7 @@ public class Not extends NonTerminal{
 	 */
 	@Override
 	public Object evaluate(List<Node> arguments, UserProgram userProgram, HashMap<String, Object> returnAddr) {
-		return Boolean.valueOf(!(Boolean)arguments.get(0).evaluate(userProgram, returnAddr));
+		return !((Boolean)arguments.get(0).evaluate(userProgram, returnAddr));
 	}
 }
 		

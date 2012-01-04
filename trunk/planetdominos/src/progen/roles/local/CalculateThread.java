@@ -44,11 +44,11 @@ public class CalculateThread implements Runnable {
 	public void run() {
 		synchronized (tasks) {
 			for (currentTask = 0; currentTask < tasks.size(); currentTask++) {
-				Calendar antes=GregorianCalendar.getInstance();
+				Calendar before=GregorianCalendar.getInstance();
 				worker.calculate(tasks.get(currentTask), userProgram);
 				tasks.notify();
-				Calendar despues=GregorianCalendar.getInstance();
-				historical.getCurrentDataCollector("PopulationTimeData").addValue("evaluation", despues.getTimeInMillis()-antes.getTimeInMillis());
+				Calendar after=GregorianCalendar.getInstance();
+				historical.getCurrentDataCollector("PopulationTimeData").addValue("evaluation", after.getTimeInMillis()-before.getTimeInMillis());
 				
 			}
 		}

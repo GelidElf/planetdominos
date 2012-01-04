@@ -4,7 +4,6 @@
 package progen.kernel.evolution.operators;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class PointMutation extends GenneticOperator {
 	 */
 	@Override
 	public List<Individual> evolve(Population population) {
-		List<Individual> individuals = selector.select(population);
+		List<Individual> individuals = selector.select(population, 1);
 		List<Individual> individualsMutate = new ArrayList<Individual>();
 		
 		Individual individualMutate = individuals.get(0);
@@ -73,7 +72,7 @@ public class PointMutation extends GenneticOperator {
 			int nodeMutate = nodes.remove(0);
 		
 			Node node = tree.getNode(nodeMutate);
-			List<Production> productions = grammar.getProductions(node.getSymbol());
+			List<Production> productions = grammar.getProductionsCompatibleWithFunction(node.getSymbol(), node.getFunction());
 			Production production = productions
 					.remove((int) (Math.random() * productions.size()));
 			/*

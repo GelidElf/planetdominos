@@ -4,10 +4,10 @@
 #progen.population.init-mode=half&half$$grow=50%,full=0.5
 #progen.population.init-mode=full
 progen.population.init-mode=grow
-progen.population.size=40
+progen.population.size=50
 progen.population.init-depth-interval=5,15
 #progen.population.max-nodes=400
-progen.max-generation=100
+progen.max-generation=200
 
 #***********************************************
 #        FUNCTION SETS and ADFS                *
@@ -37,24 +37,24 @@ progen.RPB0.functionSet=0
 #        GENNETICS OPERATORS                   *
 #***********************************************
 
-progen.total.operators=1
+progen.total.operators=3
 
 progen.gennetic.elitism.size=20%
 
-#progen.gennetic.operator0.class=PointMutation
-#progen.gennetic.operator0.selector = RandomSelector
-#progen.gennetic.operator0.probability=0.25
-#progen.gennetic.operator0.selector.size = 4
-
-#progen.gennetic.operator1.class=TreeMutation
-#progen.gennetic.operator1.probability=0.5
-#progen.gennetic.operator1.selector = Tournament
-#progen.gennetic.operator1.selector.size = 5
-
-progen.gennetic.operator0.class=OnePointCrossover
-progen.gennetic.operator0.probability=1
+progen.gennetic.operator0.class=PointMutation
 progen.gennetic.operator0.selector = RandomSelector
+progen.gennetic.operator0.probability=0.25
 progen.gennetic.operator0.selector.size = 4
+
+progen.gennetic.operator1.class=TreeMutation
+progen.gennetic.operator1.probability=0.5
+progen.gennetic.operator1.selector = Tournament\( size=5
+progen.gennetic.operator1.selector.size = 5
+
+progen.gennetic.operator2.class=OnePointCrossover
+progen.gennetic.operator2.probability=0.25
+progen.gennetic.operator2.selector = RandomSelector
+progen.gennetic.operator2.selector.size = 4
 
 
 #progen.gennetic.operator1.class=StandardCrossover

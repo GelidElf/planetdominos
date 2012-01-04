@@ -7,6 +7,7 @@ import progen.kernel.evolution.GenneticOperator;
 import progen.kernel.grammar.Grammar;
 import progen.kernel.population.Individual;
 import progen.kernel.population.Population;
+import progen.kernel.tree.IncompatibleOptionsInitTreeMethodException;
 import progen.kernel.tree.InitializeTreeMethod;
 import progen.kernel.tree.Node;
 import progen.kernel.tree.Tree;
@@ -25,7 +26,7 @@ public class TreeMutation extends GenneticOperator {
 	 */
 	@Override
 	public List<Individual> evolve(Population population) {
-		List<Individual> individuals = super.selector.select(population);
+		List<Individual> individuals = super.selector.select(population, 1);
 		List<Individual> individualsMutate = new ArrayList<Individual>();
 		
 		Individual individualMutate = individuals.get(0);
@@ -33,9 +34,13 @@ public class TreeMutation extends GenneticOperator {
 		Object [] treesSet =  individualMutate.getTrees().keySet().toArray();
 		String idTree = (String)(treesSet[(int)(Math.random()*treesSet.length)]);
 		
-		mutate(individualMutate.getTrees().get(idTree), individualMutate.getGrammars().get(idTree));
+		try{
+			mutate(individualMutate.getTrees().get(idTree), individualMutate.getGrammars().get(idTree));
+			individualsMutate.add(individualMutate);
+		}catch (IncompatibleOptionsInitTreeMethodException e){
+			//the selected node is not possible to evolve, and ignore it
+		}	
 		
-		individualsMutate.add(individualMutate);
 		return individualsMutate;
 	}
 

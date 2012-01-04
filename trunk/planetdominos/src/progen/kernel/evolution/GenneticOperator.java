@@ -1,6 +1,7 @@
 package progen.kernel.evolution;
 
 import java.util.List;
+import java.util.Map;
 
 import progen.kernel.evolution.selector.NullSelector;
 import progen.kernel.evolution.selector.Selector;
@@ -47,10 +48,10 @@ public abstract class GenneticOperator {
 	 * Define el selector que utilizará el operador genético para escoger
 	 * los inidividuos.
 	 * @param name El nombre del selector.
-	 * @param size El tamaño de la selección de individuos.
+	 * @param params Parámetros de configuración del selector.
 	 */
-	public final void setSelector(String name, int size){
-		selector=Selector.makeSelector(name, size);
+	public final void setSelector(String name, Map<String, String> params){
+		selector=Selector.makeSelector(name, params);
 	}
 	
 	/**

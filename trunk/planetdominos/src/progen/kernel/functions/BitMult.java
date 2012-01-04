@@ -7,20 +7,24 @@ import progen.kernel.tree.Node;
 import progen.userprogram.UserProgram;
 
 /**
- * This class implements the function "And".
  * @author Alberto Vegas Estrada
  * @version 1.0
  */
-public class BitMult extends Function{
+public class BitMult extends NonTerminal{
 
 	/**
-	 * Constructor. Passes to the upper class Function its arity, signature and symbol
+	 * Default constructor.
 	 */
 	public BitMult(){
-		super("Integer$$Integer$$Integer", "*");
+		super("int$$int$$int", "*");
 	}
 
 
+	/*
+	 * (non-Javadoc)
+	 * @see progen.kernel.functions.Function#evaluate(java.util.List, progen.userprogram.UserProgram, java.util.HashMap)
+	 */
+	@Override
 	public Object evaluate(List<Node> arguments, UserProgram userProgram, HashMap<String,Object> returnAddr){
 		int X = (Integer) arguments.get(0).evaluate(userProgram, returnAddr);
 		int Y = (Integer) arguments.get(1).evaluate(userProgram, returnAddr);

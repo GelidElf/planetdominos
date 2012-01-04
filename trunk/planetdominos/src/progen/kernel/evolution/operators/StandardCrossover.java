@@ -3,6 +3,7 @@ package progen.kernel.evolution.operators;
 import java.util.ArrayList;
 import java.util.List;
 
+import progen.context.ProGenContext;
 import progen.kernel.evolution.GenneticOperator;
 import progen.kernel.functions.Function;
 import progen.kernel.population.Individual;
@@ -33,21 +34,36 @@ public class StandardCrossover extends GenneticOperator {
 	 */
 	@Override
 	public List<Individual> evolve(Population population) {
-		List<Individual> individuals = selector.select(population);
+		List<Individual> individuals = selector.select(population, 2);
 		List<Individual> individualsCrossover = new ArrayList<Individual>();
-		if (individuals.size() < 2) {
+		if (individuals.size() != 2) {
 			throw new SelectorSizeIncorrectValueException(2, individuals.size());
 		} else {
-			Individual mather = individuals.get(0);
+			Individual mother = individuals.get(0);
 			Individual father = individuals.get(1);
-			Object [] treesSet = (Object[]) mather.getTrees().keySet().toArray();
+			Object [] treesSet = (Object[]) mother.getTrees().keySet().toArray();
 			String key = (String)treesSet[(int)(Math.random()*treesSet.length)];
-			Tree treeA = mather.getTrees().get(key);
+			Tree treeA = mother.getTrees().get(key);
 			Tree treeB = father.getTrees().get(key);
-			if(crossTree(treeA, treeB)){
-				individualsCrossover.add(mather);
+			
+			//A ver que te parece as�:
+			boolean validCross = false;
+			int tries = 0;
+			boolean giveUp = false;
+			while (!validCross && !giveUp) {
+				if (crossTree(treeA, treeB)) {
+					validCross = checkTrees(treeA, treeB);
+				}
+				if (++tries > 50) {
+					giveUp = true;
+				}
+			}
+			
+			if(validCross){
+				individualsCrossover.add(mother);
 				individualsCrossover.add(father);
 			}
+			
 		}
 		return individualsCrossover;
 	}
@@ -77,7 +93,7 @@ public class StandardCrossover extends GenneticOperator {
 			// guardamos los padres de los nodos de corte
 			parent1 = crossNode1.getParent();
 			parent2 = crossNode2.getParent();
-	
+
 			// guardamos la rama en la que estaban los nodos de corte
 			branchPos1 = getBranch(crossNode1);
 			branchPos2 = getBranch(crossNode2);
@@ -98,7 +114,7 @@ public class StandardCrossover extends GenneticOperator {
 	 * 
 	 * @param node El nodo del que se desea saber que posición tiene entre todos
 	 * sus hermanos.
- 	 * @return La posición entre los distintos nodos hermano.
+	 * @return La posición entre los distintos nodos hermano.
 	 */
 	private int getBranch(Node node) {
 		int branchPos = 0;
@@ -109,7 +125,7 @@ public class StandardCrossover extends GenneticOperator {
 		}
 		return branchPos;
 	}
-	
+
 	/**
 	 * Forma de seleccionar dos nodos compatible a partir de dos árboles dados.
 	 * Al estar en un método separado, es suficiente con reimplementar este método en
@@ -141,10 +157,20 @@ public class StandardCrossover extends GenneticOperator {
 					* treeB.getRoot().getTotalNodes() - 1));
 			function2 = crossNode2.getFunction().getFunction();
 		}
-		
+
 		nodes.add(crossNode1);
 		nodes.add(crossNode2);
-		
+
 		return nodes;
 	}
+
+	private boolean checkTrees(Tree treeA, Tree treeB) {
+		return checkTreeSize(treeA) & checkTreeSize(treeB);
+	}
+
+	private boolean checkTreeSize(Tree t) {
+		int maxNodes = ProGenContext.getOptionalProperty("progen.population.max-nodes", Integer.MAX_VALUE);
+		return (t.getRoot().getTotalNodes() <= maxNodes); 
+	}
+
 }

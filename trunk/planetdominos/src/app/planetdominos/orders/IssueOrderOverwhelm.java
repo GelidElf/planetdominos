@@ -1,6 +1,7 @@
 package app.planetdominos.orders;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,6 +29,10 @@ public class IssueOrderOverwhelm extends Function {
 		
 		Planet origen = (Planet)arguments.get(0).evaluate(userProgram, returnAddr);
 		Planet destino = (Planet)arguments.get(1).evaluate(userProgram, returnAddr);
+		
+		if ((origen == null) || (destino == null)){
+			return Collections.EMPTY_LIST;
+		}
 		
 		int numeroNavesAEnviar = 0;
 		

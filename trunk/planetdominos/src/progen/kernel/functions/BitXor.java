@@ -6,13 +6,13 @@ import java.util.List;
 import progen.kernel.tree.Node;
 import progen.userprogram.UserProgram;
 
-public class BitXor extends Function{
+public class BitXor extends NonTerminal{
 
 	/**
-	 * Constructor. Passes to the upper class Function its arity, signature and symbol
+	 * Default constructor.
 	 */
 	public BitXor(){
-		super("Integer$$Integer$$Integer", "^");
+		super("int$$int$$int", "^");
 	}
 	
 	@Override

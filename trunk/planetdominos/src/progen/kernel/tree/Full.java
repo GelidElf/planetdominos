@@ -58,9 +58,9 @@ public class Full implements InitializeTreeMethod{
 	 */
 	public void generate(Grammar grammar, Node root) {
 		boolean generated = false;
-		currentDepth=(int)(Math.random()*(maxDepth-minDepth+1)+minDepth);
+		currentDepth=Math.max((int)(Math.random()*(maxDepth-minDepth+1)+minDepth), root.getDepth());
 		while(!generated && conditionGeneration()){
-			generated=generate(grammar, root, grammar.getRandomProductions(grammar.getAxiom()));
+			generated=generate(grammar, root, grammar.getRandomProductions(root.getSymbol()));
 			if(!generated){
 				updateCondition();
 			}

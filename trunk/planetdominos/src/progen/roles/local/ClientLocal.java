@@ -5,20 +5,19 @@ package progen.roles.local;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import progen.context.ProGenContext;
 import progen.experimenter.Experimenter;
 import progen.experimenter.ExperimenterFactory;
+import progen.kernel.error.Info;
 import progen.kernel.evolution.Elitism;
 import progen.kernel.evolution.GenneticFactory;
 import progen.kernel.evolution.GenneticOperator;
 import progen.kernel.population.Individual;
 import progen.kernel.population.Population;
 import progen.output.HistoricalData;
-import progen.output.outputers.OutputStore;
 import progen.roles.Client;
 import progen.roles.Dispatcher;
 import progen.roles.ProGenFactory;
@@ -34,90 +33,140 @@ import progen.userprogram.UserProgram;
  */
 public class ClientLocal implements Client {
 
-	/** Factoría de roles. */
-	private ProGenFactory factory;
+    /** Factoría de roles. */
+    private ProGenFactory factory;
 
-	/** Población del problema */
-	private Population population;
+    /** Población del problema */
+    private Population population;
 
-	/** Factoría de operadores genéticos. */
-	private GenneticFactory genneticFactory;
+    /** Factoría de operadores genéticos. */
+    private GenneticFactory genneticFactory;
 
-	/** Todas las salidas disponibles de ProGen. */
-	private OutputStore outputs;
+    /** Almacén de datos históricos. */
+    private HistoricalData historical;
 
-	/** Almacén de datos históricos. */
-	private HistoricalData historical;
+    /**
+     * Constructor genérico de la clase.
+     */
+    public ClientLocal() {
+	factory = ProGenFactory.makeInstance();
+	genneticFactory = new GenneticFactory();
+	historical = HistoricalData.makeInstance();
+    }
 
-	/**
-	 * Constructor genérico de la clase.
-	 */
-	public ClientLocal() {
-		factory = ProGenFactory.makeInstance();
-		population = new Population();
-		genneticFactory = new GenneticFactory();
-		outputs = OutputStore.makeInstance();
-		historical = HistoricalData.makeInstance();
+    /*
+     * (non-Javadoc)
+     * @see progen.roles.Client#initDispatcher()
+     */
+    @Override
+    public Dispatcher initDispatcher() {
+	return factory.makeDispatcher();
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see progen.roles.ExecutionRole#start()
+     */
+    @Override
+    public void start() {
+	Experimenter experimenter = ExperimenterFactory.makeInstance();
+	Dispatcher dispatcher = this.initDispatcher();
+	UserProgram userProgram = UserProgram.getUserProgram();
+	int maxGenerations = ProGenContext.getOptionalProperty(
+		"progen.max-generation", Integer.MAX_VALUE);
+	
+	userProgram.initialize();
+
+	while (!experimenter.isDone()){
+	    experimenter.defineValues();
+	    
+	    executeExperimenter(experimenter, dispatcher, userProgram,
+		    maxGenerations);
+
+	    experimenter.updateValues();
+	    historical.newExperiment();
+	    historical.newGeneration();
+	    System.out.println(experimenter.finishMessage());
+	} 
+
+	Individual best = population.getBestIndividual();
+	String printable = userProgram.postProcess(best);
+	best.setPrintableIndividual(printable);
+	System.out.println(printable);
+
+    }
+
+    private void executeExperimenter(Experimenter experimenter,
+	    Dispatcher dispatcher, UserProgram userProgram, int maxGenerations) {
+	List<Individual> newPopulation;
+	//TODO: barra de progreso para la creacion de poblaciones?
+	Info.show(1);
+	population = new Population();
+	for (int currentGeneration=0; currentGeneration < maxGenerations;currentGeneration++) {
+	
+	dispatcher.asignTask(convertIndividualsToTasks(), userProgram);
+	updateHistoricalData(dispatcher);
+
+	newPopulation = updateNewPopulation();
+
+	experimenter.generateOutputs();
+	population.setPopulation(newPopulation);
+	historical.newGeneration();
+	}
+    }
+
+    private List<Individual> updateNewPopulation() {
+	List<Individual> newPopulation;
+	GenneticOperator operator;
+	newPopulation = new ArrayList<Individual>();
+	Calendar before;
+	Calendar after;
+
+	newPopulation = applyElitism();
+
+	while (newPopulation.size() <= population.getIndividuals().size()) {
+	    operator = genneticFactory.getOperator();
+	    before = GregorianCalendar.getInstance();
+	    newPopulation.addAll(operator.evolve(population));
+	    after = GregorianCalendar.getInstance();
+	    historical.getCurrentDataCollector("PopulationTimeData").addValue("breeding", after.getTimeInMillis() - before.getTimeInMillis());
 	}
 
-	public Dispatcher initDispatcher() {
-		return factory.makeDispatcher();
+	eraseExcedentIndividuals(newPopulation);
+	return newPopulation;
+    }
+
+    private List<Individual> applyElitism() {
+	List<Individual> newPopulation;
+	Elitism elitism = new Elitism(population);
+	newPopulation = elitism.propagate();
+	return newPopulation;
+    }
+
+    private void eraseExcedentIndividuals(List<Individual> newPopulation) {
+	if (newPopulation.size() > population.getIndividuals().size()) {
+	    while (newPopulation.size() != population.getIndividuals()
+		    .size()) {
+		newPopulation.remove(newPopulation.size() - 1);
+	    }
 	}
+    }
 
-	public void start() {
-		Experimenter experimenter = ExperimenterFactory.makeInstance();
-		Dispatcher dispatcher = this.initDispatcher();
-		List<Individual> newPopulation;
-		GenneticOperator operator;
-		UserProgram userProgram = UserProgram.getUserProgram();
-		userProgram.initialize();
-		int i = 0;
-		int maxGenerations = ProGenContext.getOptionalProperty(
-				"progen.max-generation", Integer.MAX_VALUE);
-		do {
-			while (i < maxGenerations) {
-				List<Task> individuals = new ArrayList<Task>();
-				// convert the individuals a tasks
-				for (Individual ind : population.getIndividuals()) {
-					individuals.add((Task) ind);
-				}
-				dispatcher.asignTask(individuals, userProgram);
-
-				// update historical data (RawFitness)
-				for (Task task : dispatcher.getResults()) {
-					Individual individual = (Individual) task;
-					historical.getDataCollectorExperiment("ExperimentIndividualData").addValue("statistical",individual);
-					historical.getCurrentDataCollector("ExperimentIndividualData").addValue("statistical",individual);
-					historical.getCurrentDataCollector("PopulationData").addValue("individualMean", individual);
-				}
-
-				// reset new population
-				newPopulation = new ArrayList<Individual>();
-				Calendar before;
-				Calendar after;
-				
-				Elitism elitism = new Elitism(population);
-				newPopulation=elitism.propagate();
-				
-				while (newPopulation.size() != population.getIndividuals().size()) {
-					operator = genneticFactory.getOperator();
-					before = GregorianCalendar.getInstance();
-					newPopulation.addAll(operator.evolve(population));
-					after = GregorianCalendar.getInstance();
-					historical.getCurrentDataCollector("PopulationTimeData").addValue("breeding",after.getTimeInMillis()-before.getTimeInMillis());
-				}
-
-				outputs.print();
-				population.setPopulation(newPopulation);
-				historical.newGeneration();
-				i++;
-			}
-			experimenter.generateResults();
-		}while (!experimenter.isDone());
-		
-// best = (Individual)(HistoricalData.makeInstance().getCurrentDataCollector("statistical").getPlugin("best").getValue());
-//		String printable = userProgram.postProcess(best);
-//		best.setPrintableIndividual(printable);
+    private List<Task> convertIndividualsToTasks() {
+	List<Task> individuals = new ArrayList<Task>();
+	for (Individual ind : population.getIndividuals()) {
+	    individuals.add((Task) ind);
 	}
+	return individuals;
+    }
+
+    private void updateHistoricalData(Dispatcher dispatcher) {
+	for (Task task : dispatcher.getResults()) {
+	    Individual individual = (Individual) task;
+	    historical.getDataCollectorExperiment("ExperimentIndividualData").addValue("statistical", individual);
+	    historical.getCurrentDataCollector("ExperimentIndividualData").addValue("statistical", individual);
+	    historical.getCurrentDataCollector("PopulationData").addValue("individualMean", individual);
+	}
+    }
 
 }
