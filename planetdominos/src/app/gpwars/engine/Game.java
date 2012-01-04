@@ -781,4 +781,8 @@ public class Game implements Cloneable {
 	public List<Planet> Planets() {
 		return planets;
 	}
+
+	public int getNumTurns() {
+		return numTurns;
+	}
 }

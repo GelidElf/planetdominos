@@ -13,6 +13,8 @@ import app.gpwars.util.BotTranslator;
 
 public class Planetdominos  extends UserProgram{
 
+	private static final String MAP_DIRECTORY = "app\\gpwars\\maps\\";
+
 	private static final int MAXTURNS= 50;
 
 	private static final int TOTALGAMES = 20;
@@ -27,29 +29,41 @@ public class Planetdominos  extends UserProgram{
 	
 	@Override
 	public double fitness(Individual individual) {
-		int total = TOTALGAMES;
+		int total = TOTALGAMES*3;
 		buildBotList();
 		engine = new Engine();
-		game =new Game("app\\gpwars\\maps\\map2.txt", MAXTURNS, 0);
+
+		total -= playNGames(individual, TOTALGAMES, "map2.txt");
+		total -= playNGames(individual, TOTALGAMES, "map10.txt");
+		total -= playNGames(individual, TOTALGAMES, "map72.txt");
+		return 1 - total/TOTALGAMES;
+	}
+
+	private int playNGames(Individual individual, int numberOfGames, String mapName) {
+		game =new Game(MAP_DIRECTORY + mapName, MAXTURNS, 0);
+		int totalGamesWon = 0;
 		game.Init();
-		for(int i = 0;i<TOTALGAMES;i++){
+		for(int i = 0;i<numberOfGames;i++){
 			currentPlayer = new GPPlayer(individual, this);
 			int resultado = engine.runGame(game, currentPlayer, botList, true);
 			if (resultado == 1)
-				total--;
+				totalGamesWon++;
+			int turns = game.getNumTurns();
+			if (turns > MAXTURNS/2){
+				
+			}
 		}
-		return total/TOTALGAMES;
+		return totalGamesWon;
 	}
 
 	private void buildBotList(){
 		botList = new ArrayList<String>();
 		botList.add("RandomBot");
-		botList.add("BullyBot");
-		botList.add("ProspectorBot");
-		botList.add("BullyBot");
-		botList.add("ProspectorBot");
-		botList.add("BullyBot");
-		botList.add("ProspectorBot");
+//		botList.add("BullyBot");
+//		botList.add("RageBot");
+//		botList.add("FuryBot1");
+//		botList.add("ProspectorBot");
+//		botList.add("BullyBot");
 	}
 	
 	public Game getGame() {
