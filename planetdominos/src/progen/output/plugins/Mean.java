@@ -25,7 +25,6 @@ public class Mean implements Plugin {
 		initialValue();
 	}
 
-	@SuppressWarnings("unchecked")
 	public void addValue(Comparable value) {
 		count++;
 		absoluteSum += new Double(value.toString());

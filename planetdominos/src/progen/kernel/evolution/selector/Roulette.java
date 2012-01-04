@@ -18,7 +18,7 @@ public class Roulette extends Selector{
 	 * @see progen.kernel.evolution.selector.Selector#select(progen.kernel.population.Population)
 	 */
 	@Override
-	public List<Individual> select(Population pop) {
+	public List<Individual> select(Population pop, int howMany) {
 		List<Individual> selection= new ArrayList<Individual>();
 		
 		double totalAdjustedFitness=0;
@@ -31,7 +31,7 @@ public class Roulette extends Selector{
 			totalAdjustedFitness+=individual.getAdjustedFitness();
 		}
 		
-		for(int i=0;i<super.getSize();i++){
+		for(int i=0;i<howMany;i++){
 			fitnessSelected=Math.random();
 			currentFitness=0;
 			rouletteSelected=false;

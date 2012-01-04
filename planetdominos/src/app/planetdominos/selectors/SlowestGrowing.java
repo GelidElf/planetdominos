@@ -1,6 +1,5 @@
 package app.planetdominos.selectors;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class SlowestGrowing extends Function {
 		@SuppressWarnings("unchecked")
 		List<Planet> planetasEntrada = (List<Planet>)arguments.get(0).evaluate(userProgram, returnAddr);
 		if (planetasEntrada.size() == 0){
-			return Collections.EMPTY_LIST;
+			return null;
 		}
 		Planet slowestPlanetFound = planetasEntrada.get(0);
 		for (Planet p: planetasEntrada){

@@ -6,10 +6,10 @@ import java.util.List;
 import progen.kernel.tree.Node;
 import progen.userprogram.UserProgram;
 
-public class BitVrotd extends Function{
+public class BitVrotd extends NonTerminal{
 
 	public BitVrotd(){
-		super("Integer$$Integer", "vrotd");
+		super("int$$int", "vrotd");
 	}
 
 	@Override

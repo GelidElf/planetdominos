@@ -8,6 +8,7 @@ import progen.userprogram.UserProgram;
 
 /**
  * Clase que implementa el operador de exponenciación de dos números reales.
+ * Tiene las misma propiedades que java.lang.Math.pow(a, b)
  * @author jirsis
  * @since 2.0
  */

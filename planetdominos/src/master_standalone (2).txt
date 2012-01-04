@@ -1,0 +1,30 @@
+#progen.role.factory = local* | distributed (optional)
+progen.role.factory=local
+#progen.role.factory.class=LocalFactory* | DistributedFactory | ...
+
+#progen.role.element=client* | dispatcher | worker 
+progen.role.element=client
+
+#clase que lo implementa [ClientLocal*] (optional)
+#progen.role.<element>.class = ClientLocal
+
+#progen.role.client.class=DistributedClient
+#progen.role.client.dispatcher.address=192.168.1.1
+#progen.role.client.dispatcher.port=1099
+#progen.role.client.dispatcher.name=SimpleDispatcher //nombre publicado en registry
+
+#progen.role.dispatcher.class=SimpleDispatcher
+#progen.role.dispatcher.address=192.168.1.1
+#progen.role.dispatcher.port=1099
+#progen.role.dispatcher.policy=FirstFreePool
+
+#progen.role.worker.class=SimpleWorker
+#progen.role.worker.address=192.168.1.1
+#progen.role.worker.port=1100
+#progen.role.worker.dispatcherLocation=192.168.1.1:1099
+
+progen.experiment.file = app.GPhash.GPhash.txt
+#progen.experiment.file = app.regression.Regression.txt
+#progen.experiment.file = app.regression.Regression.txt
+#progen.experiment.file = app.ProGen_3124704_15dic.Clasificador2.txt
+#progen.experiment.file = app.ProGen_bugArgs.Clasificador3.txt

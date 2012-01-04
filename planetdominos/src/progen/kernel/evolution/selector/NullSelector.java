@@ -14,8 +14,8 @@ import progen.kernel.population.Population;
 public class NullSelector extends Selector{
 
 	@Override
-	public List<Individual> select(Population pop) {
-		return new ArrayList<Individual>();
+	public List<Individual> select(Population pop, int howMany) {
+		return new ArrayList<Individual>(howMany);
 	}
 	
 	

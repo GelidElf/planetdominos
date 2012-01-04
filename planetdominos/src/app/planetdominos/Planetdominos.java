@@ -13,7 +13,7 @@ import app.gpwars.util.BotTranslator;
 
 public class Planetdominos  extends UserProgram{
 
-	private static final int MAXTURNS= 30;
+	private static final int MAXTURNS= 50;
 
 	private static final int TOTALGAMES = 20;
 
@@ -44,8 +44,12 @@ public class Planetdominos  extends UserProgram{
 	private void buildBotList(){
 		botList = new ArrayList<String>();
 		botList.add("RandomBot");
-//		botList.add("BullyBot");
-//		botList.add("ProspectorBot");
+		botList.add("BullyBot");
+		botList.add("ProspectorBot");
+		botList.add("BullyBot");
+		botList.add("ProspectorBot");
+		botList.add("BullyBot");
+		botList.add("ProspectorBot");
 	}
 	
 	public Game getGame() {
