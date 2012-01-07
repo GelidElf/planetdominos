@@ -44,7 +44,7 @@ progen.gennetic.elitism.size=10%
 
 progen.gennetic.operator0.class=PointMutation
 progen.gennetic.operator0.selector = RandomSelector
-progen.gennetic.operator0.probability=0.30
+progen.gennetic.operator0.probability=0.25
 progen.gennetic.operator0.selector.size = 10
 
 progen.gennetic.operator1.class=TreeMutation
@@ -52,7 +52,7 @@ progen.gennetic.operator1.probability=0.3
 progen.gennetic.operator1.selector = Tournament\( size=10
 
 progen.gennetic.operator2.class=OnePointCrossover
-progen.gennetic.operator2.probability=0.25
+progen.gennetic.operator2.probability=0.15
 progen.gennetic.operator2.selector = RandomSelector
 progen.gennetic.operator2.selector.size = 10
 
@@ -61,11 +61,9 @@ progen.gennetic.operator3.probability=0.15
 progen.gennetic.operator3.selector = RandomSelector
 progen.gennetic.operator3.selector.size = 4
 
-#progen.gennetic.operator1.class=StandardCrossover
-#progen.gennetic.operator1.class=TreeMutation
-#progen.gennetic.operator1.probability=0.33
-#progen.gennetic.operator1.selector = Tournament
-#progen.gennetic.operator1.selector.size = 4
+progen.gennetic.operator4.class=StandardCrossover
+progen.gennetic.operator4.probability=0.15
+progen.gennetic.operator4.selector = Tournament\( size=10
 
 
 

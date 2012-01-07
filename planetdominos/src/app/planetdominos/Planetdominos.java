@@ -75,7 +75,7 @@ public class Planetdominos extends UserProgram {
 	 */
 	private double fitnessDelBotEnPartida() {
 		int winner = engine.runGame(game,
-				currentPlayer, LISTA_NOMBRE_BOTS, true);
+				currentPlayer, LISTA_NOMBRE_BOTS, false);
 		int turnos = game.getNumTurns();
 		switch (winner) {
 		case 1:
