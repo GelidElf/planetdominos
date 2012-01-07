@@ -20,7 +20,7 @@ import app.gpwars.engine.Planet;
 public class IssueOrderPercentageOfOrigin extends Function {
 
 	public IssueOrderPercentageOfOrigin() {
-		super("List<Order>$$Planet$$Planet$$porcentaje", "issueOrderPercentageOfOrigin");
+		super("List<Order>$$myPlanet$$Planet$$porcentaje", "issueOrderPercentageOfOrigin");
 	}
 
 	@Override

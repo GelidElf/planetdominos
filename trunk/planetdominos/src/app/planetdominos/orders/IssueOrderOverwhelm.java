@@ -20,7 +20,7 @@ import app.gpwars.engine.Planet;
 public class IssueOrderOverwhelm extends Function {
 
 	public IssueOrderOverwhelm() {
-		super("List<Order>$$Planet$$Planet", "overwhelm");
+		super("List<Order>$$myPlanet$$Planet", "overwhelm");
 	}
 
 	@Override

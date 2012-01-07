@@ -21,7 +21,7 @@ import app.planetdominos.Planetdominos;
 public class IssueOrderToNearestPercentageOfOrigin extends Function {
 
 	public IssueOrderToNearestPercentageOfOrigin() {
-		super("List<Order>$$Planet$$List<Planet>$$porcentaje", "issueOrderToNearestPercentageOfOrigin");
+		super("List<Order>$$myPlanet$$List<Planet>$$porcentaje", "issueOrderToNearestPercentageOfOrigin");
 	}
 
 	@Override
