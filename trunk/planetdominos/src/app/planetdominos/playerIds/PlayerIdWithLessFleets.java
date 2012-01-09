@@ -9,7 +9,7 @@ import progen.userprogram.UserProgram;
 import app.planetdominos.Planetdominos;
 
 /**
- * 
+ *
  * @author 100061031 y 100082433
  *
  */
@@ -26,7 +26,7 @@ public class PlayerIdWithLessFleets extends Terminal {
 		Planetdominos dominos = (Planetdominos) userProgram;
 		int pIDLessFleets = 1;
 		int lowestNumberOfFleets = dominos.getGame().MyFleets(pIDLessFleets).size();
-		for (int pID = 2; pID <= dominos.getNumberOfPlayers(); pID++){
+		for (int pID = 2; pID <= dominos.getGame().getNumPlayersFromFleets(); pID++){
 			if (lowestNumberOfFleets > dominos.getGame().MyFleets(pID).size()){
 				lowestNumberOfFleets = dominos.getGame().MyFleets(pID).size();
 				pIDLessFleets = pID;

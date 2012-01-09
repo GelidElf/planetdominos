@@ -80,7 +80,7 @@ public class Planetdominos extends UserProgram {
 		switch (winner) {
 		case 1:
 			//ganamos
-			return penalizacion(turnos); 
+			return penalizacion(turnos);
 		case 0:
 			//empatamos
 			return 1;

@@ -7,7 +7,7 @@ progen.population.init-mode=grow
 progen.population.size=20
 progen.population.init-depth-interval=5,15
 #progen.population.max-nodes=400
-progen.max-generation=600
+progen.max-generation=1
 
 #***********************************************
 #        FUNCTION SETS and ADFS                *
