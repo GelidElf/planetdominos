@@ -176,7 +176,7 @@ public class BotTranslator {
 	private static String processOrder(String string) {
 		String[] tokens = string.trim().split(" \\)\\(");
 		if (tokens[0].toLowerCase().contains("order") || tokens[0].toLowerCase().contains("overwhelm")){
-			return "botOrders.add(" + string + ");\n";
+			return "botOrders.addAll(" + string + ");\n";
 		}
 		return string;
 	}
