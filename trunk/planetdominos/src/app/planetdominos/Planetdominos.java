@@ -3,6 +3,7 @@ package app.planetdominos;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -25,7 +26,7 @@ public class Planetdominos extends UserProgram {
 	private static final int MAX_TURNS_PER_GAME = 60;
 	private static final int TOTAL_GAMES_PER_MAP = 20;
 
-	private static ArrayList<String> LISTA_NOMBRE_MAPAS = null;
+	private static List<String> LISTA_NOMBRE_MAPAS = null;
 	private static List<String> LISTA_NOMBRE_BOTS = null;
 
 	private Game game;
@@ -58,7 +59,8 @@ public class Planetdominos extends UserProgram {
 	private double playGamesWith(String mapName) {
 		double sessionFitnessResult = 0;
 		for (int i = 0; i < TOTAL_GAMES_PER_MAP; i++) {
-			game = new Game(MAP_DIRECTORY + "/" + mapName, MAX_TURNS_PER_GAME, 0);
+			game = new Game(MAP_DIRECTORY + "/" + mapName, MAX_TURNS_PER_GAME,
+					0);
 			game.Init();
 			totalGamesPlayed++;
 			currentPlayer = new GPPlayer(individual, this);
@@ -69,44 +71,46 @@ public class Planetdominos extends UserProgram {
 	}
 
 	/**
-	 * For each game must we give a fitness, 0 for est fitness, 1 for worst fitness
+	 * For each game must we give a fitness, 0 for est fitness, 1 for worst
+	 * fitness
+	 * 
 	 * @param resultado
 	 * @return
 	 */
 	private double fitnessDelBotEnPartida() {
-		int winner = engine.runGame(game,
-				currentPlayer, LISTA_NOMBRE_BOTS, false);
+		int winner = engine.runGame(game, currentPlayer, LISTA_NOMBRE_BOTS,
+				false);
 		int turnos = game.getNumTurns();
 		switch (winner) {
 		case 1:
-			//ganamos
+			// ganamos
 			return penalizacion(turnos);
 		case 0:
-			//empatamos
+			// empatamos
 			return 1;
 		default:
-			//perdimos
+			// perdimos
 			return 1;
 		}
 	}
 
 	/**
 	 * implementado como una linea recta
+	 * 
 	 * @param turnos
 	 * @return
 	 */
 	private double penalizacion(int turnos) {
-		if (turnos == MAX_TURNS_PER_GAME){
+		if (turnos == MAX_TURNS_PER_GAME) {
 			return 0.5;
-		}else{
-			return 0.25*(turnos/MAX_TURNS_PER_GAME);
+		} else {
+			return 0.25 * (turnos / MAX_TURNS_PER_GAME);
 		}
 	}
 
 	private void creaListaDeMapasSiNull() {
 		if (LISTA_NOMBRE_MAPAS == null) {
 			creaListaMapasConMapasObligatorios();
-			rellenaListaMapasAleatoriamente();
 			imprimeListaMapasSeleccionados();
 		}
 	}
@@ -120,11 +124,16 @@ public class Planetdominos extends UserProgram {
 	}
 
 	private void creaListaMapasConMapasObligatorios() {
-		LISTA_NOMBRE_MAPAS = new ArrayList<String>();
-		LISTA_NOMBRE_MAPAS.add("map2.txt");
-		LISTA_NOMBRE_MAPAS.add("map10.txt");
-		LISTA_NOMBRE_MAPAS.add("map72.txt");
-
+		List<String> listaMapasPorDefecto = new ArrayList<String>();
+		listaMapasPorDefecto.add("map2.txt");
+		listaMapasPorDefecto.add("map10.txt");
+		listaMapasPorDefecto.add("map72.txt");
+		if (listaMapasPorDefecto.size() > NUMBER_OF_MAPS){
+			LISTA_NOMBRE_MAPAS =  listaMapasPorDefecto.subList(0, NUMBER_OF_MAPS);
+		}else{
+			LISTA_NOMBRE_MAPAS =  listaMapasPorDefecto;
+			rellenaListaMapasAleatoriamente();
+		}
 	}
 
 	private void rellenaListaMapasAleatoriamente() {
@@ -141,8 +150,7 @@ public class Planetdominos extends UserProgram {
 
 	private void creaListaDeBotsSiNull() {
 		if (LISTA_NOMBRE_BOTS == null) {
-			creaListaConBotsObligatorios();
-			rellenaListaDeBotsAleatoriamente();
+			creaListaConBotsPorDefecto();
 			imprimeListaDeBotsSeleccionados();
 		}
 	}
@@ -154,14 +162,20 @@ public class Planetdominos extends UserProgram {
 		}
 	}
 
-	private void creaListaConBotsObligatorios() {
-		LISTA_NOMBRE_BOTS = new ArrayList<String>();
-		LISTA_NOMBRE_BOTS.add("RandomBot");
-		// botList.add("BullyBot");
-		// botList.add("RageBot");
-		// botList.add("FuryBot1");
-		// botList.add("ProspectorBot");
-		// botList.add("BullyBot");
+	private void creaListaConBotsPorDefecto() {
+		ArrayList<String> listaBotsDefecto = new ArrayList<String>();
+		listaBotsDefecto.add("RandomBot");
+		listaBotsDefecto.add("BullyBot");
+		listaBotsDefecto.add("RageBot");
+		listaBotsDefecto.add("FuryBot1");
+		listaBotsDefecto.add("ProspectorBot");
+		listaBotsDefecto.add("BullyBot");
+		if (listaBotsDefecto.size() > NUMBER_OF_BOTS) {
+			LISTA_NOMBRE_BOTS = listaBotsDefecto.subList(0, NUMBER_OF_BOTS); 
+		} else {
+			LISTA_NOMBRE_BOTS =  listaBotsDefecto;
+			rellenaListaDeBotsAleatoriamente();
+		}
 	}
 
 	private void rellenaListaDeBotsAleatoriamente() {
@@ -172,7 +186,8 @@ public class Planetdominos extends UserProgram {
 			for (int i = LISTA_NOMBRE_BOTS.size(); i < NUMBER_OF_BOTS; i++) {
 				int mapIndex = r.nextInt(fileList.length);
 				String className = fileList[mapIndex].getName();
-				LISTA_NOMBRE_BOTS.add(className.substring(0, className.length() - 6));
+				LISTA_NOMBRE_BOTS.add(className.substring(0,
+						className.length() - 6));
 			}
 		}
 	}

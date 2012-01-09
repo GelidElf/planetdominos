@@ -1,6 +1,7 @@
 package app.planetdominos.engine.bots;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -17,7 +18,89 @@ public class BotWrapper extends Player {
 		g = game;
 		List<Order> botOrders = new ArrayList<Order>();
 		//
+		
 		return botOrders;
+	}
+
+	private List<Order> overwhelm(Planet origen, Planet destino) {
+		if ((origen == null) || (destino == null)){
+			return Collections.EMPTY_LIST;
+		}
+		
+		int numeroNavesAEnviar = 0;
+		
+		if (origen.NumShips() > destino.NumShips()){
+			numeroNavesAEnviar = destino.NumShips();
+		}else{
+			numeroNavesAEnviar = origen.NumShips();
+		}
+		
+		Order order = new Order(origen, destino, numeroNavesAEnviar);
+		List<Order> listaOrdenes = new ArrayList<Order>();
+		listaOrdenes.add(order);
+		
+		return listaOrdenes;
+	}
+
+	private Planet weakest(List<Planet> planetasEntrada) {
+		if (planetasEntrada.size() == 0){
+			return null;
+		}
+		Planet weakestPlanetFound = planetasEntrada.get(0);
+		for (Planet p: planetasEntrada){
+			if (p.NumShips() < weakestPlanetFound.NumShips()){
+				weakestPlanetFound = p;
+			}
+		}
+		return weakestPlanetFound;
+	}
+
+	private List<Planet> enemy() {
+		return g.EnemyPlanets(1);
+	}
+
+	private Planet mySlowestGrowing() {
+		List<Planet> planetasEntrada = g.MyPlanets(1);
+		if (planetasEntrada.size() == 0){
+			return null;
+		}
+		Planet slowestPlanetFound = planetasEntrada.get(0);
+		for (Planet p: planetasEntrada){
+			if (p.GrowthRate() > slowestPlanetFound.GrowthRate()){
+				slowestPlanetFound = p;
+			}
+		}
+		return slowestPlanetFound;
+	}
+
+	private boolean numPlanetsEquals(int totalOfPlanetsFromPlayer,
+			int totalOfPlanetsFromPlayer2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private Boolean numShipLessThan(int a, int b) {
+		return a < b;
+	}
+
+	private Boolean playerIDEquals(int a, int b) {
+		return a == b;
+	}
+
+	private int playerIdWithMoreFleets() {
+		int pIDMoreFleets = 1;
+		int highestNumberOfFleets = g.MyFleets(pIDMoreFleets).size();
+		for (Integer pID : g.getNumPlayersFromFleets()) {
+			if (highestNumberOfFleets < g.MyFleets(pID).size()) {
+				highestNumberOfFleets = g.MyFleets(pID).size();
+				pIDMoreFleets = pID;
+			}
+		}
+		return pIDMoreFleets;
+	}
+
+	private Boolean numShipGreaterThan(int a, int b) {
+		return a > b;
 	}
 
 	private Boolean numShipEquals(int a, int b) {
@@ -26,10 +109,10 @@ public class BotWrapper extends Player {
 
 	private int playerIdWithMoreShips() {
 		int pIDMoreShips = 1;
-		int highestNumberOfShips =g.NumShips(pIDMoreShips);
-		for (Integer pID: g.getNumPlayersFromShips()){
-			if (highestNumberOfShips <g.NumShips(pID)){
-				highestNumberOfShips =g.NumShips(pID);
+		int highestNumberOfShips = g.NumShips(pIDMoreShips);
+		for (Integer pID : g.getNumPlayersFromShips()) {
+			if (highestNumberOfShips < g.NumShips(pID)) {
+				highestNumberOfShips = g.NumShips(pID);
 				pIDMoreShips = pID;
 			}
 		}
@@ -56,16 +139,11 @@ public class BotWrapper extends Player {
 		return a > b;
 	}
 
-	private Object totalOfPlanetsFromPlayer(Object myId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	private int playerIdWithLessShips() {
 		int pIDLessShips = 1;
 		int lowestNumberOfShips = g.NumShips(pIDLessShips);
-		for (Integer pID: g.getNumPlayersFromFleets()){
-			if (lowestNumberOfShips > g.NumShips(pID)){
+		for (Integer pID : g.getNumPlayersFromFleets()) {
+			if (lowestNumberOfShips > g.NumShips(pID)) {
 				lowestNumberOfShips = g.NumShips(pID);
 				pIDLessShips = pID;
 			}
@@ -76,8 +154,8 @@ public class BotWrapper extends Player {
 	private int playerIdWithLessPlanets() {
 		int pIDLessPlanets = 1;
 		int lowestNumberOfPlanets = g.MyPlanets(pIDLessPlanets).size();
-		for (Integer pID: g.getNumPlayersFromFleets()){
-			if (lowestNumberOfPlanets > g.MyPlanets(pID).size()){
+		for (Integer pID : g.getNumPlayersFromPlanets()) {
+			if (lowestNumberOfPlanets > g.MyPlanets(pID).size()) {
 				lowestNumberOfPlanets = g.MyPlanets(pID).size();
 				pIDLessPlanets = pID;
 			}
@@ -88,8 +166,8 @@ public class BotWrapper extends Player {
 	private int playerIdWithLessFleets() {
 		int pIDLessFleets = 1;
 		int lowestNumberOfFleets = g.MyFleets(pIDLessFleets).size();
-		for (int pID = 2; pID <= g.getNumPlayersFromFleets()); pID++){
-			if (lowestNumberOfFleets > g.MyFleets(pID).size()){
+		for (Integer pID : g.getNumPlayersFromFleets()) {
+			if (lowestNumberOfFleets > g.MyFleets(pID).size()) {
 				lowestNumberOfFleets = g.MyFleets(pID).size();
 				pIDLessFleets = pID;
 			}
@@ -121,10 +199,9 @@ public class BotWrapper extends Player {
 		return g.NumShips(playerId);
 	}
 
-
 	/*
 	 * SUPPORT METHODS:
-	 *
+	 * 
 	 * The name of these methods should match the names of your GP operators,
 	 * exactly as they appear in your function set. Obviously, they also should
 	 * provide exactly the same functionality as the GP operators, otherwise you
