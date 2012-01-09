@@ -17,7 +17,7 @@ import app.gpwars.util.BotTranslator;
 public class Planetdominos extends UserProgram {
 
 	private static final int NUMBER_OF_MAPS = 3;
-	private static final int NUMBER_OF_BOTS = 2;
+	private static final int NUMBER_OF_BOTS = 1;
 
 	private static final String MAP_DIRECTORY = "./app/gpwars/maps";
 	private static final String BOT_DIRECTORY = "./app/gpwars/engine/bots";
@@ -96,7 +96,11 @@ public class Planetdominos extends UserProgram {
 	 * @return
 	 */
 	private double penalizacion(int turnos) {
-		return turnos*(0.5/MAX_TURNS_PER_GAME);
+		if (turnos == MAX_TURNS_PER_GAME){
+			return 0.5;
+		}else{
+			return turnos*(0.25/MAX_TURNS_PER_GAME);
+		}
 	}
 
 	private void creaListaDeMapasSiNull() {
