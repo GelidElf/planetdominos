@@ -801,23 +801,23 @@ public class Game implements Cloneable {
 		return numTurns;
 	}
 
-	public int getNumPlayersFromPlanets() {
+	public Set<Integer> getNumPlayersFromPlanets() {
 		Set<Integer> planetOwners = new HashSet<Integer>();
 		for (Planet p :planets){
 			planetOwners.add(p.Owner());
 		}
-		return planetOwners.size();
+		return planetOwners;
 	}
 
-	public int getNumPlayersFromFleets() {
+	public Set<Integer> getNumPlayersFromFleets() {
 		Set<Integer> fleetOwners = new HashSet<Integer>();
 		for (Fleet f :fleets){
 			fleetOwners.add(f.Owner());
 		}
-		return fleetOwners.size();
+		return fleetOwners;
 	}
 
-	public int getNumPlayersFromShips() {
+	public Set<Integer> getNumPlayersFromShips() {
 		Set<Integer> shipOwners = new HashSet<Integer>();
 		for (Planet p :planets){
 			shipOwners.add(p.Owner());
@@ -825,7 +825,7 @@ public class Game implements Cloneable {
 		for (Fleet f :fleets){
 			shipOwners.add(f.Owner());
 		}
-		return shipOwners.size();
+		return shipOwners;
 	}
 
 }
