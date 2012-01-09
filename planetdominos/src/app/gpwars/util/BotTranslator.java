@@ -102,41 +102,50 @@ public class BotTranslator {
 					buffTokens.add(s);
 					s = stack.pop();
 				}
-				/* Now, if buffTokens.size() is 4, then this operation must be an issueOrder. The operator should 
-				 * be the fourth token, the source planet is the third one, the destination planet is the second, 
+				/* Now, if buffTokens.size() is 4, then this operation must be an issueOrder. The operator should
+				 * be the fourth token, the source planet is the third one, the destination planet is the second,
 				 * and the number of ships is the first token (sExpressions are in prefix notation and stacks are
 				 * LIFO).
-				 * If buffTokens.size() is 3, then this operator must be a concatenetor. The operator is coded in 
+				 * If buffTokens.size() is 3, then this operator must be a concatenetor. The operator is coded in
 				 * the third token, the first argument in the second token, and the second argument in the first
 				 * token.
 				 * If buffTokens.size() is 2, then the operator is unary, and must be a Planet selector
-				 * (StrongestPkanet, WeakestPlanet, or similar), so the first token is the argument, and the 
+				 * (StrongestPkanet, WeakestPlanet, or similar), so the first token is the argument, and the
 				 * second token is the operator
-				 * 
+				 *
 				 */
-				if (buffTokens.size() == 4) {
-					//With 4 tokens, this operator must be an IssueOrder
+
+				//if sentence
+				if (buffTokens.get(buffTokens.size()-1).contains("ifthenelse")){
 					buff = new StringBuffer();
-					buff.append("botOrders.add(new Order(");
-					buff.append(buffTokens.get(2) + ", ");
-					buff.append(buffTokens.get(1) + ", ");
-					buff.append("translatePercent(" + buffTokens.get(0).replace('%', ' ') + "," + buffTokens.get(2) + ")");
-					buff.append("));\n");
+					buff.append("if ( ");
+					buff.append(processTokenIfSingle(buffTokens,2) + " ) {\n");
+					buff.append(processTokenIfSingle(buffTokens,1) + "} \n else {");
+					buff.append(processTokenIfSingle(buffTokens,0) + "} ");
 					block = buff.toString();
 					stack.push(block);
-				} else if (buffTokens.size() == 3) {
-					//With 3 tokens, the operator must be a concatenator
+				}else if (buffTokens.size() == 4) {
+					//With 4 tokens, this operator must be an IssueOrder
 					buff = new StringBuffer();
-					buff.append(buffTokens.get(1));
-					buff.append(buffTokens.get(0));			
-					block = buff.toString();
+					buff.append(buffTokens.get(3) + " ( ");
+					buff.append(processTokenIfSingle(buffTokens,2) + ", ");
+					buff.append(processTokenIfSingle(buffTokens,1) + ", ");
+					buff.append(processTokenIfSingle(buffTokens,0)+ " ) ");
+					block = processOrder(buff.toString());
+					stack.push(block);
+				} else if (buffTokens.size() == 3) {
+					buff = new StringBuffer();
+					buff.append(buffTokens.get(2) + " (");
+					buff.append(processTokenIfSingle(buffTokens,1) + ", ");
+					buff.append(processTokenIfSingle(buffTokens,0) + " )");
+					block = processOrder(buff.toString());
 					stack.push(block);
 				} else if (buffTokens.size() == 2) {
 					//With two tokens, this operator must be Strongest, Weakest, FastestsGrowing, or similar:
 					buff = new StringBuffer();
-					buff.append(buffTokens.get(1) + "(");
-					buff.append(buffTokens.get(0) + "())");
-					block = buff.toString();
+					buff.append(buffTokens.get(1) + " ( ");
+					buff.append(processTokenIfSingle(buffTokens,0) + " )");
+					block = processOrder(buff.toString());
 					stack.push(block);
 				} else {
 					System.out.println("ERROR in \"case ')':\"");
@@ -149,7 +158,7 @@ public class BotTranslator {
 				} else {
 					javaCode = stack.pop();
 					state = StateType.q3;
-				}	
+				}
 				break;
 
 			}
@@ -162,7 +171,22 @@ public class BotTranslator {
 			return javaCode;
 		}
 
+	}
 
+	private static String processOrder(String string) {
+		String[] tokens = string.trim().split(" \\)\\(");
+		if (tokens[0].toLowerCase().contains("order") || tokens[0].toLowerCase().contains("overwhelm")){
+			return "botOrders.add(" + string + ");\n";
+		}
+		return string;
+	}
+
+	public static String processTokenIfSingle(List<String> buffTokens,  int pos){
+		String procesedString = buffTokens.get(pos);
+		if (!procesedString.trim().contains(")")){
+			return procesedString +" () ";
+		}
+		return procesedString;
 	}
 
 }

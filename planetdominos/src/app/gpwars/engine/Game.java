@@ -23,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -41,12 +42,15 @@ public class Game implements Cloneable {
 	// 4. Otherwise return player_id, since players other than 1 and pov are
 	// unaffected by the pov switch.
 	public static int PovSwitch(int pov, int playerID) {
-		if (pov < 0)
+		if (pov < 0) {
 			return playerID;
-		if (playerID == pov)
+		}
+		if (playerID == pov) {
 			return 1;
-		if (playerID == 1)
+		}
+		if (playerID == 1) {
 			return pov;
+		}
 		return playerID;
 	}
 
@@ -102,13 +106,16 @@ public class Game implements Cloneable {
 		for (Fleet f : _g.fleets) {
 			fleets.add((Fleet) (f.clone()));
 		}
-		if (_g.mapFilename != null)
+		if (_g.mapFilename != null) {
 			mapFilename = new String(_g.mapFilename);
-		if (_g.mapData != null)
+		}
+		if (_g.mapData != null) {
 			mapData = new String(_g.mapData);
+		}
 		initMode = _g.initMode;
-		if (_g.gamePlayback != null)
+		if (_g.gamePlayback != null) {
 			gamePlayback = new StringBuffer(_g.gamePlayback);
+		}
 		maxGameLength = _g.maxGameLength;
 		numTurns = _g.numTurns;
 		// Dont need to init the drawing stuff (it does it itself)
@@ -146,6 +153,7 @@ public class Game implements Cloneable {
 		fleets.add(f);
 	}
 
+	@Override
 	public Object clone() {
 		return new Game(this);
 	}
@@ -189,16 +197,18 @@ public class Game implements Cloneable {
 
 		boolean needcomma = false;
 		for (Planet p : planets) {
-			if (needcomma)
+			if (needcomma) {
 				gamePlayback.append(",");
+			}
 			gamePlayback.append(p.Owner());
 			gamePlayback.append(".");
 			gamePlayback.append(p.NumShips());
 			needcomma = true;
 		}
 		for (Fleet f : fleets) {
-			if (needcomma)
+			if (needcomma) {
 				gamePlayback.append(",");
+			}
 			gamePlayback.append(f.Owner());
 			gamePlayback.append(".");
 			gamePlayback.append(f.NumShips());
@@ -357,13 +367,13 @@ public class Game implements Cloneable {
 		}
 		return false;
 	}
-	
+
 	public int issueOrder(Player player, Order order) {
-		
+
 		Planet source 		= order.getSourcePlanet();
 		Planet destination	= order.getDestinationPlanet();
 		int numShips		= order.getNumShips();
-		
+
 		//Check if the order is legal:
 		if ( (source.belongsTo(player)) && (numShips <= source.NumShips()) && (numShips > 0) ) {
 		//If it is legal:
@@ -378,8 +388,8 @@ public class Game implements Cloneable {
 			return -1;
 		}
 	}
-	
-	
+
+
 	// Issue an order. This function takes num_ships off the source_planet,
 	// puts them into a newly-created fleet, calculates the distance to the
 	// destination_planet, and sets the fleet's total trip time to that
@@ -585,14 +595,18 @@ public class Game implements Cloneable {
 		double right = Double.MIN_VALUE;
 		double bottom = Double.MIN_VALUE;
 		for (Planet p : planets) {
-			if (p.X() < left)
+			if (p.X() < left) {
 				left = p.X();
-			if (p.X() > right)
+			}
+			if (p.X() > right) {
 				right = p.X();
-			if (p.Y() > bottom)
+			}
+			if (p.Y() > bottom) {
 				bottom = p.Y();
-			if (p.Y() < top)
+			}
+			if (p.Y() < top) {
 				top = p.Y();
+			}
 		}
 		double xRange = right - left;
 		double yRange = bottom - top;
@@ -680,6 +694,7 @@ public class Game implements Cloneable {
 
 	// Writes a string which represents the current game state. No point-of-
 	// view switching is performed.
+	@Override
 	public String toString() {
 		return PovRepresentation(-1);
 	}
@@ -730,7 +745,7 @@ public class Game implements Cloneable {
 		}
 		return r;
 	}
-	
+
 	// Return a list of all the planets owned by a player
 	public List<Planet> MyPlanets(int playerID) {
 		List<Planet> r = new ArrayList<Planet>();
@@ -741,7 +756,7 @@ public class Game implements Cloneable {
 		}
 		return r;
 	}
-	
+
 	// Return a list of all the planets owned by the enemy of a player
 	public List<Planet> EnemyPlanets(int playerID) {
 		List<Planet> r = new ArrayList<Planet>();
@@ -752,7 +767,7 @@ public class Game implements Cloneable {
 		}
 		return r;
 	}
-	
+
 	// Return a list of all the neutral planets
 	public List<Planet> NeutralPlanets() {
 		List<Planet> r = new ArrayList<Planet>();
@@ -763,8 +778,8 @@ public class Game implements Cloneable {
 		}
 		return r;
 	}
-	
-	
+
+
 	// Return a list of all the planets that are not owned by a player.
 	// This includes all enemy planets and neutral planets.
 	public List<Planet> NotMyPlanets(int planetID) {
@@ -776,7 +791,7 @@ public class Game implements Cloneable {
 		}
 		return r;
 	}
-	
+
 	//Return all the planets
 	public List<Planet> Planets() {
 		return planets;
@@ -785,4 +800,32 @@ public class Game implements Cloneable {
 	public int getNumTurns() {
 		return numTurns;
 	}
+
+	public int getNumPlayersFromPlanets() {
+		Set<Integer> planetOwners = new HashSet<Integer>();
+		for (Planet p :planets){
+			planetOwners.add(p.Owner());
+		}
+		return planetOwners.size();
+	}
+
+	public int getNumPlayersFromFleets() {
+		Set<Integer> fleetOwners = new HashSet<Integer>();
+		for (Fleet f :fleets){
+			fleetOwners.add(f.Owner());
+		}
+		return fleetOwners.size();
+	}
+
+	public int getNumPlayersFromShips() {
+		Set<Integer> shipOwners = new HashSet<Integer>();
+		for (Planet p :planets){
+			shipOwners.add(p.Owner());
+		}
+		for (Fleet f :fleets){
+			shipOwners.add(f.Owner());
+		}
+		return shipOwners.size();
+	}
+
 }
