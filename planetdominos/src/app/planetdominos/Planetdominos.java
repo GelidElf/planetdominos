@@ -23,7 +23,7 @@ public class Planetdominos extends UserProgram {
 	private static final String BOT_DIRECTORY = "./app/gpwars/engine/bots";
 
 	private static final int MAX_TURNS_PER_GAME = 60;
-	private static final int TOTAL_GAMES_PER_SESSION = 20;
+	private static final int TOTAL_GAMES_PER_MAP = 20;
 
 	private static ArrayList<String> LISTA_NOMBRE_MAPAS = null;
 	private static List<String> LISTA_NOMBRE_BOTS = null;
@@ -57,7 +57,7 @@ public class Planetdominos extends UserProgram {
 
 	private double playGamesWith(String mapName) {
 		double sessionFitnessResult = 0;
-		for (int i = 0; i < TOTAL_GAMES_PER_SESSION; i++) {
+		for (int i = 0; i < TOTAL_GAMES_PER_MAP; i++) {
 			game = new Game(MAP_DIRECTORY + "/" + mapName, MAX_TURNS_PER_GAME, 0);
 			game.Init();
 			totalGamesPlayed++;
@@ -99,7 +99,7 @@ public class Planetdominos extends UserProgram {
 		if (turnos == MAX_TURNS_PER_GAME){
 			return 0.5;
 		}else{
-			return turnos*(0.25/MAX_TURNS_PER_GAME);
+			return 0.25*(turnos/MAX_TURNS_PER_GAME);
 		}
 	}
 

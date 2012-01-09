@@ -26,7 +26,7 @@ public class PlayerIdWithMorePlanets extends Terminal {
 		Planetdominos dominos = (Planetdominos) userProgram;
 		int pIDMorePlanets = 1;
 		int highestNumberOfPlanets = dominos.getGame().MyPlanets(pIDMorePlanets).size();
-		for (int pID = 2; pID <=  dominos.getGame().getNumPlayersFromPlanets(); pID++){
+		for (Integer pID: dominos.getGame().getNumPlayersFromFleets()){
 			if (highestNumberOfPlanets < dominos.getGame().MyPlanets(pID).size()){
 				highestNumberOfPlanets = dominos.getGame().MyPlanets(pID).size();
 				pIDMorePlanets = pID;

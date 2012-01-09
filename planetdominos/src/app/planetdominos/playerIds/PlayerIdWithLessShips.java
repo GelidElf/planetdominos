@@ -26,7 +26,7 @@ public class PlayerIdWithLessShips extends Terminal {
 		Planetdominos dominos = (Planetdominos) userProgram;
 		int pIDLessShips = 1;
 		int lowestNumberOfShips = dominos.getGame().NumShips(pIDLessShips);
-		for (int pID = 2; pID <=  dominos.getGame().getNumPlayersFromShips(); pID++){
+		for (Integer pID: dominos.getGame().getNumPlayersFromFleets()){
 			if (lowestNumberOfShips > dominos.getGame().NumShips(pID)){
 				lowestNumberOfShips = dominos.getGame().NumShips(pID);
 				pIDLessShips = pID;
