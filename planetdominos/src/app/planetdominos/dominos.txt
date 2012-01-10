@@ -4,10 +4,10 @@
 #progen.population.init-mode=half&half$$grow=50%,full=0.5
 #progen.population.init-mode=full
 progen.population.init-mode=grow
-progen.population.size=50
+progen.population.size=25
 progen.population.init-depth-interval=5,15
 #progen.population.max-nodes=400
-progen.max-generation=500
+progen.max-generation=300
 
 #***********************************************
 #        FUNCTION SETS and ADFS                *

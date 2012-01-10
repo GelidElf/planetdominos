@@ -156,7 +156,7 @@ public class Planetdominos extends UserProgram {
 	}
 
 	private void imprimeListaDeBotsSeleccionados() {
-		System.out.println("Lista de bota seleccionados: ");
+		System.out.println("Lista de bots seleccionados: ");
 		for (String botName : LISTA_NOMBRE_BOTS) {
 			System.out.println("    " + botName);
 		}
