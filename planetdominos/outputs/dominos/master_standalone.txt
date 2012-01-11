@@ -1,2 +1,0 @@
-
-progen.experiment.file = app.planetdominos.dominos.txt
