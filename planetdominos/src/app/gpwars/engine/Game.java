@@ -31,6 +31,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import app.gpwars.util.StringBufferProxy;
+
 public class Game implements Cloneable {
 	// Carries out the point-of-view switch operation, so that each player can
 	// always assume that he is player number 1. There are three cases.
@@ -74,7 +76,7 @@ public class Game implements Cloneable {
 
 	// This is the game playback string. It's a complete description of the
 	// game. It can be read by a visualization program to visualize the game.
-	private StringBuffer gamePlayback;
+	private StringBufferProxy gamePlayback;
 
 	// Stores a mode identifier which determines how to initialize this object.
 	// See the constructor for details.
@@ -114,7 +116,7 @@ public class Game implements Cloneable {
 		}
 		initMode = _g.initMode;
 		if (_g.gamePlayback != null) {
-			gamePlayback = new StringBuffer(_g.gamePlayback);
+			gamePlayback = new StringBufferProxy(_g.gamePlayback);
 		}
 		maxGameLength = _g.maxGameLength;
 		numTurns = _g.numTurns;
@@ -133,7 +135,7 @@ public class Game implements Cloneable {
 	public Game(String s, int maxGameLength, int mode) {
 		planets = new ArrayList<Planet>();
 		fleets = new ArrayList<Fleet>();
-		gamePlayback = new StringBuffer();
+		gamePlayback = new StringBufferProxy();
 		initMode = mode;
 		switch (initMode) {
 		case 0:
@@ -289,8 +291,8 @@ public class Game implements Cloneable {
 	// Returns the playback string so far, then clears it.
 	// Used for live streaming output
 	public String FlushGamePlaybackString() {
-		StringBuffer oldGamePlayback = gamePlayback;
-		gamePlayback = new StringBuffer();
+		StringBufferProxy oldGamePlayback = gamePlayback;
+		gamePlayback = new StringBufferProxy();
 		return oldGamePlayback.toString();
 	}
 
