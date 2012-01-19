@@ -3,9 +3,11 @@ package app.planetdominos;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import progen.context.ProGenContext;
 import progen.kernel.population.Individual;
 import progen.userprogram.UserProgram;
 import app.gpwars.GPPlayer;
@@ -16,14 +18,13 @@ import app.gpwars.util.BotTranslator;
 
 public class Planetdominos extends UserProgram {
 
-	private static final int NUMBER_OF_MAPS = 3;
-	private static final int NUMBER_OF_BOTS = 1;
-
 	private static final String MAP_DIRECTORY = "./app/gpwars/maps";
 	private static final String BOT_DIRECTORY = "./app/gpwars/engine/bots";
-
-	private static final int MAX_TURNS_PER_GAME = 60;
-	private static final int TOTAL_GAMES_PER_MAP = 20;
+	
+	private static Integer NUMBER_OF_MAPS = Integer.parseInt(ProGenContext.getMandatoryProperty("dominos.fitness.numberOfMaps"));
+	private static Integer NUMBER_OF_BOTS = Integer.parseInt(ProGenContext.getMandatoryProperty("dominos.fitness.numberOfBots"));
+	private static Integer MAX_TURNS_PER_GAME = Integer.parseInt(ProGenContext.getMandatoryProperty("dominos.fitness.maxTurnsPerGame"));
+	private static Integer TOTAL_GAMES_PER_MAP = Integer.parseInt(ProGenContext.getMandatoryProperty("dominos.fitness.totalGamesPerMap"));
 
 	private static List<String> LISTA_NOMBRE_MAPAS = null;
 	private static List<String> LISTA_NOMBRE_BOTS = null;
@@ -45,6 +46,7 @@ public class Planetdominos extends UserProgram {
 		this.individual = individual;
 		totalGamesPlayed = 0;
 		totalFitness = 0;
+		compruebaYCargaVariablesDesdeElContexto();
 		creaListaDeBotsSiNull();
 		creaListaDeMapasSiNull();
 		engine = new Engine();
@@ -53,6 +55,15 @@ public class Planetdominos extends UserProgram {
 			totalFitness += playGamesWith(nombreMapa);
 		}
 		return totalFitness / totalGamesPlayed;
+	}
+
+	private void compruebaYCargaVariablesDesdeElContexto() {
+
+		NUMBER_OF_MAPS = Integer.parseInt(ProGenContext.getMandatoryProperty("dominos.fitness.numberOfMaps"));
+		NUMBER_OF_BOTS = Integer.parseInt(ProGenContext.getMandatoryProperty("dominos.fitness.numberOfBots"));
+		MAX_TURNS_PER_GAME = Integer.parseInt(ProGenContext.getMandatoryProperty("dominos.fitness.maxTurnsPerGame"));
+		TOTAL_GAMES_PER_MAP = Integer.parseInt(ProGenContext.getMandatoryProperty("dominos.fitness.totalGamesPerMap"));
+		
 	}
 
 	private double playGamesWith(String mapName) {
@@ -109,7 +120,7 @@ public class Planetdominos extends UserProgram {
 
 	private void creaListaDeMapasSiNull() {
 		if (LISTA_NOMBRE_MAPAS == null) {
-			creaListaMapasConMapasObligatorios();
+			cargaListaMapasConMapasObligatorios();
 			imprimeListaMapasSeleccionados();
 		}
 	}
@@ -122,12 +133,11 @@ public class Planetdominos extends UserProgram {
 
 	}
 
-	private void creaListaMapasConMapasObligatorios() {
+	private void cargaListaMapasConMapasObligatorios() {
+		String[] mapNames = ProGenContext.getMandatoryProperty("dominos.fitness.maps").split(",");
 		List<String> listaMapasPorDefecto = new ArrayList<String>();
-		listaMapasPorDefecto.add("map2.txt");
-		listaMapasPorDefecto.add("map10.txt");
-		listaMapasPorDefecto.add("map72.txt");
-		if (listaMapasPorDefecto.size() > NUMBER_OF_MAPS){
+		listaMapasPorDefecto.addAll(Arrays.asList(mapNames));
+		if (mapNames.length > NUMBER_OF_MAPS){
 			LISTA_NOMBRE_MAPAS =  listaMapasPorDefecto.subList(0, NUMBER_OF_MAPS);
 		}else{
 			LISTA_NOMBRE_MAPAS =  listaMapasPorDefecto;
@@ -162,13 +172,9 @@ public class Planetdominos extends UserProgram {
 	}
 
 	private void creaListaConBotsPorDefecto() {
-		ArrayList<String> listaBotsDefecto = new ArrayList<String>();
-		listaBotsDefecto.add("RandomBot");
-		listaBotsDefecto.add("BullyBot");
-		listaBotsDefecto.add("RageBot");
-		listaBotsDefecto.add("FuryBot1");
-		listaBotsDefecto.add("ProspectorBot");
-		listaBotsDefecto.add("BullyBot");
+		String[] botNames = ProGenContext.getMandatoryProperty("dominos.fitness.bots").split(",");
+		List<String> listaBotsDefecto = new ArrayList<String>();
+		listaBotsDefecto.addAll(Arrays.asList(botNames));
 		if (listaBotsDefecto.size() > NUMBER_OF_BOTS) {
 			LISTA_NOMBRE_BOTS = listaBotsDefecto.subList(0, NUMBER_OF_BOTS); 
 		} else {

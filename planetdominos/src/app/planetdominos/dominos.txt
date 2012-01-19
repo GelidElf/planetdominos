@@ -4,10 +4,17 @@
 #progen.population.init-mode=half&half$$grow=50%,full=0.5
 #progen.population.init-mode=full
 progen.population.init-mode=grow
-progen.population.size=35
+progen.population.size=500
 progen.population.init-depth-interval=5,15
 #progen.population.max-nodes=400
-progen.max-generation=300
+progen.max-generation=1000
+
+dominos.fitness.numberOfMaps=5
+dominos.fitness.numberOfBots=3
+dominos.fitness.maxTurnsPerGame=60
+dominos.fitness.totalGamesPerMap=20
+dominos.fitness.maps=map2.txt,map10.txt,map72.txt
+dominos.fitness.bots=RandomBot,BullyBot,RageBot,FuryBot1,ProspectorBot,BullyBot
 
 #***********************************************
 #        FUNCTION SETS and ADFS                *
