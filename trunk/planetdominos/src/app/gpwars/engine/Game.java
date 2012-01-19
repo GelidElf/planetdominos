@@ -437,7 +437,7 @@ public class Game implements Cloneable {
 	// the file format. It should be called the Planet Wars Point-in-Time
 	// format. On success, return 1. On failure, returns 0.
 	private int LoadMapFromFile(String mapFilename) {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		BufferedReader in = null;
 		try {
 			in = new BufferedReader(new FileReader(mapFilename));
