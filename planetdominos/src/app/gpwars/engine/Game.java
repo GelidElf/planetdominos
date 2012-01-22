@@ -74,10 +74,6 @@ public class Game implements Cloneable {
 //		}
 //	}
 
-	// This is the game playback string. It's a complete description of the
-	// game. It can be read by a visualization program to visualize the game.
-	private StringBufferProxy gamePlayback;
-
 	// Stores a mode identifier which determines how to initialize this object.
 	// See the constructor for details.
 	private int initMode;
@@ -115,9 +111,6 @@ public class Game implements Cloneable {
 			mapData = new String(_g.mapData);
 		}
 		initMode = _g.initMode;
-		if (_g.gamePlayback != null) {
-			gamePlayback = new StringBufferProxy(_g.gamePlayback);
-		}
 		maxGameLength = _g.maxGameLength;
 		numTurns = _g.numTurns;
 		// Dont need to init the drawing stuff (it does it itself)
@@ -135,7 +128,6 @@ public class Game implements Cloneable {
 	public Game(String s, int maxGameLength, int mode) {
 		planets = new ArrayList<Planet>();
 		fleets = new ArrayList<Fleet>();
-		gamePlayback = new StringBufferProxy();
 		initMode = mode;
 		switch (initMode) {
 		case 0:
@@ -197,33 +189,6 @@ public class Game implements Cloneable {
 			FightBattle(p);
 		}
 
-		boolean needcomma = false;
-		for (Planet p : planets) {
-			if (needcomma) {
-				gamePlayback.append(",");
-			}
-			gamePlayback.append(p.Owner());
-			gamePlayback.append(".");
-			gamePlayback.append(p.NumShips());
-			needcomma = true;
-		}
-		for (Fleet f : fleets) {
-			if (needcomma) {
-				gamePlayback.append(",");
-			}
-			gamePlayback.append(f.Owner());
-			gamePlayback.append(".");
-			gamePlayback.append(f.NumShips());
-			gamePlayback.append(".");
-			gamePlayback.append(f.SourcePlanet());
-			gamePlayback.append(".");
-			gamePlayback.append(f.DestinationPlanet());
-			gamePlayback.append(".");
-			gamePlayback.append(f.TotalTripLength());
-			gamePlayback.append(".");
-			gamePlayback.append(f.TurnsRemaining());
-		}
-		gamePlayback.append(":");
 		// Check to see if the maximum number of turns has been reached.
 		++numTurns;
 	}
@@ -291,15 +256,13 @@ public class Game implements Cloneable {
 	// Returns the playback string so far, then clears it.
 	// Used for live streaming output
 	public String FlushGamePlaybackString() {
-		StringBufferProxy oldGamePlayback = gamePlayback;
-		gamePlayback = new StringBufferProxy();
-		return oldGamePlayback.toString();
+		return "NONE";
 	}
 
 	// Returns the game playback string. This is a complete record of the game,
 	// and can be passed to a visualization program to playback the game.
 	public String GamePlaybackString() {
-		return gamePlayback.toString();
+		return "NONE";
 	}
 
 	// Gets a color for a player (clamped)
@@ -516,11 +479,6 @@ public class Game implements Cloneable {
 				Planet p = new Planet(planetID++, owner, numShips, growthRate,
 						x, y);
 				planets.add(p);
-				if (gamePlayback.length() > 0) {
-					gamePlayback.append(":");
-				}
-				gamePlayback.append("" + x + "," + y + "," + owner + ","
-						+ numShips + "," + growthRate);
 			} else if (tokens[0].equals("F")) {
 				if (tokens.length != 7) {
 					return 0;
@@ -538,7 +496,6 @@ public class Game implements Cloneable {
 				return 0;
 			}
 		}
-		gamePlayback.append("|");
 		return 1;
 	}
 
