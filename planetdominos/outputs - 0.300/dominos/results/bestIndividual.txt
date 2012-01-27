@@ -1,0 +1,268 @@
+(defun RPB0 
+(ifthenelse 	false 
+		(ifthenelse 	(and 	(numShipLessThan 	(totalOfShipsFromPlayer 	playerIdWithLessFleets 
+					) 
+					(totalOfShipsFromPlayer 	playerIdWithLessFleets 
+					) 
+				) 
+				(numPlanetsLessThan 	(totalOfPlanetsFromPlayer 	playerIdWithMoreShips 
+					) 
+					(totalOfPlanetsFromPlayer 	playerIdWithLessShips 
+					) 
+				) 
+			) 
+			(ifthenelse 	(numFleetsEquals 	(totalOfFleetsFromPlayer 	playerIdWithLessFleets 
+					) 
+					(totalOfFleetsFromPlayer 	playerIdWithLessFleets 
+					) 
+				) 
+				(ifthenelse 	(numFleetsEquals 	(totalOfFleetsFromPlayer 	playerIdWithLessPlanets 
+						) 
+						(totalOfFleetsFromPlayer 	playerIdWithLessFleets 
+						) 
+					) 
+					(issueOrderPercentageOfDestination 	myFastestGrowing 
+						(slowestGrowing 	enemy 
+						) 
+						porcentaje075 
+					) 
+					(ifthenelse 	(numPlanetsEquals 	(totalOfPlanetsFromPlayer 	playerIdWithLessPlanets 
+							) 
+							(totalOfPlanetsFromPlayer 	playerIdWithLessPlanets 
+							) 
+						) 
+						(overwhelm 	myWeakest 
+							(slowestGrowing 	enemy 
+							) 
+						) 
+						(ifthenelse 	fleetInFlight 
+							(ifthenelse 	(or 	fleetInFlight 
+									(numShipEquals 	(totalOfShipsFromPlayer 	playerIdWithLessShips 
+										) 
+										(totalOfShipsFromPlayer 	playerIdWithMoreShips 
+										) 
+									) 
+								) 
+								(ifthenelse 	(and 	(numFleetsEquals 	(totalOfFleetsFromPlayer 	playerIdWithMorePlanets 
+											) 
+											(totalOfFleetsFromPlayer 	playerIdWithLessPlanets 
+											) 
+										) 
+										(numShipGreaterThan 	(totalOfShipsFromPlayer 	playerIdWithMoreShips 
+											) 
+											(totalOfShipsFromPlayer 	playerIdWithMorePlanets 
+											) 
+										) 
+									) 
+									(issueOrderPercentageOfOrigin 	myFastestGrowing 
+										(weakest 	(ownedBy 	playerIdWithMorePlanets 
+											) 
+										) 
+										porcentaje015 
+									) 
+									(issueOrderPercentageOfOrigin 	myWeakest 
+										(strongest 	neutral 
+										) 
+										porcentaje025 
+									) 
+								) 
+								(overwhelm 	myFastestGrowing 
+									(weakest 	all 
+									) 
+								) 
+							) 
+							(issueOrderPercentageOfDestination 	myWeakest 
+								(weakest 	enemy 
+								) 
+								porcentaje020 
+							) 
+						) 
+					) 
+				) 
+				(ifthenelse 	(and 	(numShipEquals 	(totalOfShipsFromPlayer 	playerIdWithMorePlanets 
+							) 
+							(totalOfShipsFromPlayer 	playerIdWithLessFleets 
+							) 
+						) 
+						(numPlanetsLessThan 	(totalOfPlanetsFromPlayer 	playerIdWithLessFleets 
+							) 
+							(totalOfPlanetsFromPlayer 	playerIdWithLessFleets 
+							) 
+						) 
+					) 
+					(issueOrderToNearestPercentageOfDestination 	myWeakest 
+						all 
+						porcentaje085 
+					) 
+					(overwhelm 	myFastestGrowing 
+						(weakest 	all 
+						) 
+					) 
+				) 
+			) 
+			(ifthenelse 	(numPlanetsGreaterThan 	(totalOfPlanetsFromPlayer 	playerIdWithMoreShips 
+					) 
+					(totalOfPlanetsFromPlayer 	playerIdWithMoreFleets 
+					) 
+				) 
+				(ifthenelse 	(numPlanetsLessThan 	(totalOfPlanetsFromPlayer 	playerIdWithLessFleets 
+						) 
+						(totalOfPlanetsFromPlayer 	playerIdWithLessFleets 
+						) 
+					) 
+					(ifthenelse 	(numPlanetsEquals 	(totalOfPlanetsFromPlayer 	playerIdWithLessFleets 
+							) 
+							(totalOfPlanetsFromPlayer 	playerIdWithLessPlanets 
+							) 
+						) 
+						(issueOrderToNearestPercentageOfDestination 	myStrongest 
+							enemy 
+							porcentaje095 
+						) 
+						(ifthenelse 	(or 	(numPlanetsEquals 	(totalOfPlanetsFromPlayer 	playerIdWithLessFleets 
+									) 
+									(totalOfPlanetsFromPlayer 	playerIdWithLessPlanets 
+									) 
+								) 
+								(and 	true 
+									(numFleetsEquals 	(totalOfFleetsFromPlayer 	playerIdWithMorePlanets 
+										) 
+										(totalOfFleetsFromPlayer 	playerIdWithLessPlanets 
+										) 
+									) 
+								) 
+							) 
+							noOrder 
+							(issueOrderPercentageOfOrigin 	mySlowestGrowing 
+								(fastestGrowing 	all 
+								) 
+								porcentaje055 
+							) 
+						) 
+					) 
+					(ifthenelse 	(numShipEquals 	(totalOfShipsFromPlayer 	playerIdWithLessFleets 
+							) 
+							(totalOfShipsFromPlayer 	playerIdWithMorePlanets 
+							) 
+						) 
+						(overwhelm 	mySlowestGrowing 
+							(strongest 	all 
+							) 
+						) 
+						(issueOrderToNearestPercentageOfDestination 	myStrongest 
+							enemy 
+							porcentaje100 
+						) 
+					) 
+				) 
+				(issueOrderToNearestPercentageOfDestination 	myWeakest 
+					all 
+					porcentaje010 
+				) 
+			) 
+		) 
+		(ifthenelse 	(not 	(numShipGreaterThan 	(totalOfShipsFromPlayer 	playerIdWithMoreFleets 
+					) 
+					(totalOfShipsFromPlayer 	playerIdWithLessShips 
+					) 
+				) 
+			) 
+			(ifthenelse 	(and 	(numPlanetsLessThan 	(totalOfPlanetsFromPlayer 	playerIdWithMoreShips 
+						) 
+						(totalOfPlanetsFromPlayer 	playerIdWithLessFleets 
+						) 
+					) 
+					(numShipGreaterThan 	(totalOfShipsFromPlayer 	playerIdWithLessPlanets 
+						) 
+						(totalOfShipsFromPlayer 	playerIdWithMorePlanets 
+						) 
+					) 
+				) 
+				noOrder 
+				(ifthenelse 	(numFleetsLessThan 	(totalOfFleetsFromPlayer 	playerIdWithLessShips 
+						) 
+						(totalOfFleetsFromPlayer 	playerIdWithLessPlanets 
+						) 
+					) 
+					(issueOrderPercentageOfDestination 	myStrongest 
+						(slowestGrowing 	(ownedBy 	playerIdWithLessShips 
+							) 
+						) 
+						porcentaje095 
+					) 
+					(issueOrderPercentageOfOrigin 	mySlowestGrowing 
+						(weakest 	all 
+						) 
+						porcentaje100 
+					) 
+				) 
+			) 
+			(ifthenelse 	(playerIDEquals 	playerIdWithMoreShips 
+					playerIdWithMoreShips 
+				) 
+				(ifthenelse 	(numPlanetsEquals 	(totalOfPlanetsFromPlayer 	playerIdWithMoreShips 
+						) 
+						(totalOfPlanetsFromPlayer 	playerIdWithMoreFleets 
+						) 
+					) 
+					(issueOrderPercentageOfOrigin 	myStrongest 
+						(fastestGrowing 	enemy 
+						) 
+						porcentaje095 
+					) 
+					(ifthenelse 	(and 	(or 	(numFleetsEquals 	(totalOfFleetsFromPlayer 	playerIdWithLessShips 
+									) 
+									(totalOfFleetsFromPlayer 	playerIdWithLessFleets 
+									) 
+								) 
+								false 
+							) 
+							(numShipGreaterThan 	(totalOfShipsFromPlayer 	playerIdWithMoreFleets 
+								) 
+								(totalOfShipsFromPlayer 	playerIdWithMorePlanets 
+								) 
+							) 
+						) 
+						noOrder 
+						(issueOrderPercentageOfOrigin 	myFastestGrowing 
+							(slowestGrowing 	neutral 
+							) 
+							porcentaje095 
+						) 
+					) 
+				) 
+				(ifthenelse 	(or 	(numPlanetsLessThan 	(totalOfPlanetsFromPlayer 	playerIdWithMoreShips 
+							) 
+							(totalOfPlanetsFromPlayer 	playerIdWithLessShips 
+							) 
+						) 
+						(playerIDEquals 	playerIdWithLessFleets 
+							playerIdWithLessShips 
+						) 
+					) 
+					noOrder 
+					(ifthenelse 	(and 	(or 	false 
+								false 
+							) 
+							(numShipGreaterThan 	(totalOfShipsFromPlayer 	playerIdWithMoreShips 
+								) 
+								(totalOfShipsFromPlayer 	playerIdWithLessFleets 
+								) 
+							) 
+						) 
+						(issueOrderToNearestPercentageOfDestination 	myWeakest 
+							all 
+							porcentaje085 
+						) 
+						(overwhelm 	myFastestGrowing 
+							(weakest 	neutral 
+							) 
+						) 
+					) 
+				) 
+			) 
+		) 
+	) 
+	
+)
+
