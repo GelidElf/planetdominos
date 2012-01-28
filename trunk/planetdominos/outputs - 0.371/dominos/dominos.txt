@@ -29,7 +29,7 @@ progen.functionSet0=\
  planetlists.All, planetlists.Enemy, planetlists.Neutral, planetlists.OwnedBy,\
  playerIds.MyId, playerIds.PlayerIdWithLessFleets, playerIds.PlayerIdWithLessPlanets, playerIds.PlayerIdWithLessShips, playerIds.PlayerIdWithMoreFleets, playerIds.PlayerIdWithMorePlanets, playerIds.PlayerIdWithMoreShips,\
  selectors.FastestGrowing, selectors.SlowestGrowing, selectors.Strongest, selectors.Weakest,\
- myselectors.MyFastestGrowing, myselectors.MySlowestGrowing, myselectors.MyStrongest, myselectors.MyWeakest,\
+ myselectors.FastestGrowing, myselectors.SlowestGrowing, myselectors.Strongest, myselectors.Weakest,\
  percentages.ERCPorcentaje005, percentages.ERCPorcentaje010, percentages.ERCPorcentaje015, percentages.ERCPorcentaje020, percentages.ERCPorcentaje025,\
  percentages.ERCPorcentaje030,percentages.ERCPorcentaje035,percentages.ERCPorcentaje040,percentages.ERCPorcentaje045,percentages.ERCPorcentaje050,\
  percentages.ERCPorcentaje055,percentages.ERCPorcentaje060,percentages.ERCPorcentaje065,percentages.ERCPorcentaje070,percentages.ERCPorcentaje075,\

@@ -15,9 +15,9 @@ import app.planetdominos.Planetdominos;
  *
  */
 
-public class SlowestGrowing extends Function {
+public class MySlowestGrowing extends Function {
 
-	public SlowestGrowing() {
+	public MySlowestGrowing() {
 		super("myPlanet", "mySlowestGrowing");
 	}
 

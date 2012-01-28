@@ -15,9 +15,9 @@ import app.planetdominos.Planetdominos;
  *
  */
 
-public class Weakest extends Function {
+public class MyWeakest extends Function {
 
-	public Weakest() {
+	public MyWeakest() {
 		super("myPlanet", "myWeakest");
 	}
 
