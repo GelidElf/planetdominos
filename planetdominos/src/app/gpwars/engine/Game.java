@@ -31,8 +31,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import app.gpwars.util.StringBufferProxy;
-
 public class Game implements Cloneable {
 	// Carries out the point-of-view switch operation, so that each player can
 	// always assume that he is player number 1. There are three cases.
