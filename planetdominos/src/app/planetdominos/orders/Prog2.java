@@ -18,7 +18,7 @@ import app.gpwars.engine.Order;
 public class Prog2 extends Function{
 
 	public Prog2() {
-		super("List<Order>$$List<Order>$$List<Order>", "Prog2");
+		super("List<Order>$$List<Order>$$List<Order>", "prog2");
 		
 	}
 

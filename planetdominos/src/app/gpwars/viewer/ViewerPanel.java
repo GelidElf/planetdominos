@@ -20,6 +20,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -283,7 +284,7 @@ public class ViewerPanel extends JPanel implements ActionListener, Runnable {
 
     JButton btn;
     for (int i = 0; i < icons.length; i++) {
-      btn = new JButton(new ImageIcon(getClass().getResource("bin/app/gpwars/viewer/img/" + icons[i] + ".png")));
+      btn = new JButton(new ImageIcon(getClass().getResource("img/" + icons[i] + ".png")));
       if (icons[i].equals("pause")) {
         pauseButton = btn;
       }

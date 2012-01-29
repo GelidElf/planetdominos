@@ -45,7 +45,7 @@ public class Engine {
 		try {
 			PrintWriter viewerOut = null;
 			if (verbose) {
-				viewerOut = new PrintWriter(new FileWriter("app/gpwars/alternativeViewerLog.txt"));
+				viewerOut = new PrintWriter(new FileWriter("src/app/gpwars/alternativeViewerLog.txt"));
 			}
 			// Enter the main game loop.
 			while (game.Winner() < 0) {

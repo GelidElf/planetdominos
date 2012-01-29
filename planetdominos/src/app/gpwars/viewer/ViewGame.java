@@ -42,7 +42,7 @@ public class ViewGame extends JFrame {
     StringBuilder playbackString = new StringBuilder();
     InputStreamReader input;
 
-		input = new InputStreamReader(new FileInputStream("app/gpwars/matchLog.txt"));
+		input = new InputStreamReader(new FileInputStream("src/app/gpwars/alternativeViewerLog.txt"));
 	
     BufferedReader reader = new BufferedReader(input);
     String string;

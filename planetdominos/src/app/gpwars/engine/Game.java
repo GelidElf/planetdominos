@@ -72,6 +72,12 @@ public class Game implements Cloneable {
 //		}
 //	}
 
+	// This is the game playback string. It's a complete description of the
+	// game. It can be read by a visualization program to visualize the game.
+	private StringBuilder gamePlayback;
+
+	private boolean createOutput;
+	
 	// Stores a mode identifier which determines how to initialize this object.
 	// See the constructor for details.
 	private int initMode;
@@ -109,8 +115,12 @@ public class Game implements Cloneable {
 			mapData = new String(_g.mapData);
 		}
 		initMode = _g.initMode;
+		if (_g.gamePlayback != null) {
+			gamePlayback = new StringBuilder(_g.gamePlayback);
+		}
 		maxGameLength = _g.maxGameLength;
 		numTurns = _g.numTurns;
+		createOutput = _g.createOutput;
 		// Dont need to init the drawing stuff (it does it itself)
 	}
 
@@ -123,9 +133,10 @@ public class Game implements Cloneable {
 	// This constructor does not actually initialize the game object. You must
 	// always call Init() before the game object will be in any kind of
 	// coherent state.
-	public Game(String s, int maxGameLength, int mode) {
+	public Game(String s, int maxGameLength, int mode, boolean createOutput) {
 		planets = new ArrayList<Planet>();
 		fleets = new ArrayList<Fleet>();
+		gamePlayback = new StringBuilder();
 		initMode = mode;
 		switch (initMode) {
 		case 0:
@@ -139,6 +150,7 @@ public class Game implements Cloneable {
 		}
 		this.maxGameLength = maxGameLength;
 		numTurns = 0;
+		this.createOutput = createOutput;
 	}
 
 	public void AddFleet(Fleet f) {
@@ -187,10 +199,51 @@ public class Game implements Cloneable {
 			FightBattle(p);
 		}
 
+		boolean needcomma = false;
+		for (Planet p : planets) {
+			if (needcomma) {
+				appendToOutput(",");
+			}
+			appendToOutput(p.Owner());
+			appendToOutput(".");
+			appendToOutput(p.NumShips());
+			needcomma = true;
+		}
+		for (Fleet f : fleets) {
+			if (needcomma) {
+				appendToOutput(",");
+			}
+			appendToOutput(f.Owner());
+			appendToOutput(".");
+			appendToOutput(f.NumShips());
+			appendToOutput(".");
+			appendToOutput(f.SourcePlanet());
+			appendToOutput(".");
+			appendToOutput(f.DestinationPlanet());
+			appendToOutput(".");
+			appendToOutput(f.TotalTripLength());
+			appendToOutput(".");
+			appendToOutput(f.TurnsRemaining());
+		}
+		appendToOutput(":");
 		// Check to see if the maximum number of turns has been reached.
 		++numTurns;
 	}
 
+	private StringBuilder appendToOutput(String obj) {
+		if (createOutput){
+			return gamePlayback.append(obj);
+		}
+			return null;
+	}
+
+	private StringBuilder appendToOutput(int obj) {
+		if (createOutput){
+			return gamePlayback.append(obj);
+		}
+			return null;
+	}
+	
 	// Kicks a player out of the game. This is used in cases where a player
 	// tries to give an illegal order or runs over the time limit.
 	public void DropPlayer(int playerID) {
@@ -254,13 +307,15 @@ public class Game implements Cloneable {
 	// Returns the playback string so far, then clears it.
 	// Used for live streaming output
 	public String FlushGamePlaybackString() {
-		return "NONE";
+		StringBuilder oldGamePlayback = gamePlayback;
+		gamePlayback = new StringBuilder();
+		return oldGamePlayback.toString();
 	}
 
 	// Returns the game playback string. This is a complete record of the game,
 	// and can be passed to a visualization program to playback the game.
 	public String GamePlaybackString() {
-		return "NONE";
+		return gamePlayback.toString();
 	}
 
 	// Gets a color for a player (clamped)
@@ -398,7 +453,7 @@ public class Game implements Cloneable {
 	// the file format. It should be called the Planet Wars Point-in-Time
 	// format. On success, return 1. On failure, returns 0.
 	private int LoadMapFromFile(String mapFilename) {
-		StringBuilder s = new StringBuilder();
+		StringBuffer s = new StringBuffer();
 		BufferedReader in = null;
 		try {
 			in = new BufferedReader(new FileReader(mapFilename));
@@ -477,6 +532,11 @@ public class Game implements Cloneable {
 				Planet p = new Planet(planetID++, owner, numShips, growthRate,
 						x, y);
 				planets.add(p);
+				if (gamePlayback.length() > 0) {
+					appendToOutput(":");
+				}
+				appendToOutput("" + x + "," + y + "," + owner + ","
+						+ numShips + "," + growthRate);
 			} else if (tokens[0].equals("F")) {
 				if (tokens.length != 7) {
 					return 0;
@@ -494,6 +554,7 @@ public class Game implements Cloneable {
 				return 0;
 			}
 		}
+		appendToOutput("|");
 		return 1;
 	}
 

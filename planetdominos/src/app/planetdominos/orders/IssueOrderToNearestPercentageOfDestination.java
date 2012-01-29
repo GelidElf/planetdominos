@@ -60,6 +60,9 @@ public class IssueOrderToNearestPercentageOfDestination extends Function {
 		if (origen.NumShips() < numeroNavesAEnviar){
 			numeroNavesAEnviar = origen.NumShips();
 		}
+		if (numeroNavesAEnviar == 0){
+			return Collections.emptyList();
+		}
 		Order order = new Order(origen, nearestPlanet, numeroNavesAEnviar);
 		List<Order> listaOrdenes = new ArrayList<Order>();
 		listaOrdenes.add(order);

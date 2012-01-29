@@ -29,6 +29,7 @@ public class BotTranslator {
 				case '\t':
 				case ' ' :
 				case '\n':
+				case '\r': 
 					//Read another char and stay in initial state:
 					if (index < sExpression.length()) {
 						c = sExpression.charAt(index++);
@@ -71,6 +72,7 @@ public class BotTranslator {
 					case '\t':
 					case ' ' :
 					case '\n':
+					case '\r':
 					case '(':
 						block = buff.toString();
 						stack.push(block);
@@ -114,7 +116,13 @@ public class BotTranslator {
 				 * second token is the operator
 				 *
 				 */
-
+				if (buffTokens.get(buffTokens.size()-1).contains("prog2")){
+					buff = new StringBuffer();
+					buff.append(processTokenIfSingle(buffTokens,1) + "\n");
+					buff.append(processTokenIfSingle(buffTokens,0) + "\n");
+					block = buff.toString();
+					stack.push(block);
+				}else 
 				//if sentence
 				if (buffTokens.get(buffTokens.size()-1).contains("ifthenelse")){
 					buff = new StringBuffer();
@@ -184,7 +192,11 @@ public class BotTranslator {
 	public static String processTokenIfSingle(List<String> buffTokens,  int pos){
 		String procesedString = buffTokens.get(pos);
 		if (!procesedString.trim().contains(")")){
-			return procesedString +" () ";
+			if (!procesedString.trim().equals("false") && !procesedString.trim().equals("true"))
+				if (procesedString.trim().equals("noOrder"))
+					return procesedString +" (); ";
+				else
+					return procesedString +" () ";
 		}
 		return procesedString;
 	}

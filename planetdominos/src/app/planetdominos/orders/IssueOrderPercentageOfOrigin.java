@@ -37,7 +37,9 @@ public class IssueOrderPercentageOfOrigin extends Function {
 		double porcentaje = (Double)arguments.get(2).evaluate(userProgram, returnAddr);
 		
 		int numeroNavesAEnviar = new Double(origen.NumShips()*porcentaje).intValue();
-		
+		if (numeroNavesAEnviar == 0){
+			return Collections.emptyList();
+		}
 		Order order = new Order(origen, destino, numeroNavesAEnviar);
 		List<Order> listaOrdenes = new ArrayList<Order>();
 		listaOrdenes.add(order);

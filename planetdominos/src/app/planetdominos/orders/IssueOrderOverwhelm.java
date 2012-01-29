@@ -41,6 +41,9 @@ public class IssueOrderOverwhelm extends Function {
 		}else{
 			numeroNavesAEnviar = origen.NumShips();
 		}
+		if (numeroNavesAEnviar == 0){
+			return Collections.emptyList();
+		}
 		
 		Order order = new Order(origen, destino, numeroNavesAEnviar);
 		List<Order> listaOrdenes = new ArrayList<Order>();

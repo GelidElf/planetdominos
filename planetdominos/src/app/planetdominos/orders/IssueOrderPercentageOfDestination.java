@@ -41,6 +41,9 @@ public class IssueOrderPercentageOfDestination extends Function {
 		if (origen.NumShips() < numeroNavesAEnviar){
 			numeroNavesAEnviar = origen.NumShips();
 		}
+		if (numeroNavesAEnviar == 0){
+			return Collections.emptyList();
+		}
 		Order order = new Order(origen, destino, numeroNavesAEnviar);
 		List<Order> listaOrdenes = new ArrayList<Order>();
 		listaOrdenes.add(order);

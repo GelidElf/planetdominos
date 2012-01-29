@@ -10,14 +10,77 @@ import app.gpwars.engine.Order;
 import app.gpwars.engine.Planet;
 import app.gpwars.engine.Player;
 
-public class BotWrapper extends Player {
+public class Bot300 extends Player {
 	Game g;
 
 	@Override
 	public List<Order> DoTurn(Game game) {
 		g = game;
 		List<Order> botOrders = new ArrayList<Order>();
-		// ####
+if ( false ) {
+if ( and (numShipLessThan (totalOfShipsFromPlayer ( playerIdWithLessFleets ()  ), totalOfShipsFromPlayer ( playerIdWithLessFleets ()  ) ), numPlanetsLessThan (totalOfPlanetsFromPlayer ( playerIdWithMoreShips ()  ), totalOfPlanetsFromPlayer ( playerIdWithLessShips ()  ) ) ) ) {
+if ( numFleetsEquals (totalOfFleetsFromPlayer ( playerIdWithLessFleets ()  ), totalOfFleetsFromPlayer ( playerIdWithLessFleets ()  ) ) ) {
+if ( numFleetsEquals (totalOfFleetsFromPlayer ( playerIdWithLessPlanets ()  ), totalOfFleetsFromPlayer ( playerIdWithLessFleets ()  ) ) ) {
+botOrders.addAll(issueOrderPercentageOfDestination ( myFastestGrowing () , slowestGrowing ( enemy ()  ), porcentaje075 ()  ) );
+} 
+ else {if ( numPlanetsEquals (totalOfPlanetsFromPlayer ( playerIdWithLessPlanets ()  ), totalOfPlanetsFromPlayer ( playerIdWithLessPlanets ()  ) ) ) {
+botOrders.addAll(overwhelm (myWeakest () , slowestGrowing ( enemy ()  ) ));
+} 
+ else {if ( fleetInFlight ()  ) {
+if ( or (fleetInFlight () , numShipEquals (totalOfShipsFromPlayer ( playerIdWithLessShips ()  ), totalOfShipsFromPlayer ( playerIdWithMoreShips ()  ) ) ) ) {
+if ( and (numFleetsEquals (totalOfFleetsFromPlayer ( playerIdWithMorePlanets ()  ), totalOfFleetsFromPlayer ( playerIdWithLessPlanets ()  ) ), numShipGreaterThan (totalOfShipsFromPlayer ( playerIdWithMoreShips ()  ), totalOfShipsFromPlayer ( playerIdWithMorePlanets ()  ) ) ) ) {
+botOrders.addAll(issueOrderPercentageOfOrigin ( myFastestGrowing () , weakest ( ownedBy ( playerIdWithMorePlanets ()  ) ), porcentaje015 ()  ) );
+} 
+ else {botOrders.addAll(issueOrderPercentageOfOrigin ( myWeakest () , strongest ( neutral ()  ), porcentaje025 ()  ) );
+} } 
+ else {botOrders.addAll(overwhelm (myFastestGrowing () , weakest ( all ()  ) ));
+} } 
+ else {botOrders.addAll(issueOrderPercentageOfDestination ( myWeakest () , weakest ( enemy ()  ), porcentaje020 ()  ) );
+} } } } 
+ else {if ( and (numShipEquals (totalOfShipsFromPlayer ( playerIdWithMorePlanets ()  ), totalOfShipsFromPlayer ( playerIdWithLessFleets ()  ) ), numPlanetsLessThan (totalOfPlanetsFromPlayer ( playerIdWithLessFleets ()  ), totalOfPlanetsFromPlayer ( playerIdWithLessFleets ()  ) ) ) ) {
+botOrders.addAll(issueOrderToNearestPercentageOfDestination ( myWeakest () , all () , porcentaje085 ()  ) );
+} 
+ else {botOrders.addAll(overwhelm (myFastestGrowing () , weakest ( all ()  ) ));
+} } } 
+ else {if ( numPlanetsGreaterThan (totalOfPlanetsFromPlayer ( playerIdWithMoreShips ()  ), totalOfPlanetsFromPlayer ( playerIdWithMoreFleets ()  ) ) ) {
+if ( numPlanetsLessThan (totalOfPlanetsFromPlayer ( playerIdWithLessFleets ()  ), totalOfPlanetsFromPlayer ( playerIdWithLessFleets ()  ) ) ) {
+if ( numPlanetsEquals (totalOfPlanetsFromPlayer ( playerIdWithLessFleets ()  ), totalOfPlanetsFromPlayer ( playerIdWithLessPlanets ()  ) ) ) {
+botOrders.addAll(issueOrderToNearestPercentageOfDestination ( myStrongest () , enemy () , porcentaje095 ()  ) );
+} 
+ else {if ( or (numPlanetsEquals (totalOfPlanetsFromPlayer ( playerIdWithLessFleets ()  ), totalOfPlanetsFromPlayer ( playerIdWithLessPlanets ()  ) ), and (true, numFleetsEquals (totalOfFleetsFromPlayer ( playerIdWithMorePlanets ()  ), totalOfFleetsFromPlayer ( playerIdWithLessPlanets ()  ) ) ) ) ) {
+noOrder (); } 
+ else {botOrders.addAll(issueOrderPercentageOfOrigin ( mySlowestGrowing () , slowestGrowing ( all ()  ), porcentaje055 ()  ) );
+} } } 
+ else {if ( numShipEquals (totalOfShipsFromPlayer ( playerIdWithLessFleets ()  ), totalOfShipsFromPlayer ( playerIdWithMorePlanets ()  ) ) ) {
+botOrders.addAll(overwhelm (mySlowestGrowing () , strongest ( all ()  ) ));
+} 
+ else {botOrders.addAll(issueOrderToNearestPercentageOfDestination ( myStrongest () , enemy () , porcentaje100 ()  ) );
+} } } 
+ else {botOrders.addAll(issueOrderToNearestPercentageOfDestination ( myWeakest () , all () , porcentaje010 ()  ) );
+} } } 
+ else {if ( not ( numShipGreaterThan (totalOfShipsFromPlayer ( playerIdWithMoreFleets ()  ), totalOfShipsFromPlayer ( playerIdWithLessShips ()  ) ) ) ) {
+if ( and (numPlanetsLessThan (totalOfPlanetsFromPlayer ( playerIdWithMoreShips ()  ), totalOfPlanetsFromPlayer ( playerIdWithLessFleets ()  ) ), numShipGreaterThan (totalOfShipsFromPlayer ( playerIdWithLessPlanets ()  ), totalOfShipsFromPlayer ( playerIdWithMorePlanets ()  ) ) ) ) {
+noOrder (); } 
+ else {if ( numFleetsLessThan (totalOfFleetsFromPlayer ( playerIdWithLessShips ()  ), totalOfFleetsFromPlayer ( playerIdWithLessPlanets ()  ) ) ) {
+botOrders.addAll(issueOrderPercentageOfDestination ( myStrongest () , slowestGrowing ( ownedBy ( playerIdWithLessShips ()  ) ), porcentaje095 ()  ) );
+} 
+ else {botOrders.addAll(issueOrderPercentageOfOrigin ( mySlowestGrowing () , weakest ( all ()  ), porcentaje100 ()  ) );
+} } } 
+ else {if ( playerIDEquals (playerIdWithMoreShips () , playerIdWithMoreShips ()  ) ) {
+if ( numPlanetsEquals (totalOfPlanetsFromPlayer ( playerIdWithMoreShips ()  ), totalOfPlanetsFromPlayer ( playerIdWithMoreFleets ()  ) ) ) {
+botOrders.addAll(issueOrderPercentageOfOrigin ( myStrongest () , slowestGrowing ( enemy ()  ), porcentaje095 ()  ) );
+} 
+ else {if ( and (or (numFleetsEquals (totalOfFleetsFromPlayer ( playerIdWithLessShips ()  ), totalOfFleetsFromPlayer ( playerIdWithLessFleets ()  ) ), false ), numShipGreaterThan (totalOfShipsFromPlayer ( playerIdWithMoreFleets ()  ), totalOfShipsFromPlayer ( playerIdWithMorePlanets ()  ) ) ) ) {
+noOrder (); } 
+ else {botOrders.addAll(issueOrderPercentageOfOrigin ( myFastestGrowing () , slowestGrowing ( neutral ()  ), porcentaje095 ()  ) );
+} } } 
+ else {if ( or (numPlanetsLessThan (totalOfPlanetsFromPlayer ( playerIdWithMoreShips ()  ), totalOfPlanetsFromPlayer ( playerIdWithLessShips ()  ) ), playerIDEquals (playerIdWithLessFleets () , playerIdWithLessShips ()  ) ) ) {
+noOrder (); } 
+ else {if ( and (or (false, false ), numShipGreaterThan (totalOfShipsFromPlayer ( playerIdWithMoreShips ()  ), totalOfShipsFromPlayer ( playerIdWithLessFleets ()  ) ) ) ) {
+botOrders.addAll(issueOrderToNearestPercentageOfDestination ( myWeakest () , all () , porcentaje085 ()  ) );
+} 
+ else {botOrders.addAll(overwhelm (myFastestGrowing () , weakest ( neutral ()  ) ));
+} } } } } 
 		
 		return botOrders;
 	}

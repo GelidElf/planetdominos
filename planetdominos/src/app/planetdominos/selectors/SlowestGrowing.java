@@ -30,7 +30,7 @@ public class SlowestGrowing extends Function {
 		}
 		Planet slowestPlanetFound = planetasEntrada.get(0);
 		for (Planet p: planetasEntrada){
-			if (p.GrowthRate() > slowestPlanetFound.GrowthRate()){
+			if (p.GrowthRate() < slowestPlanetFound.GrowthRate()){
 				slowestPlanetFound = p;
 			}
 		}
