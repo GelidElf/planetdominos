@@ -136,7 +136,10 @@ public class Planetdominos extends UserProgram {
 	private void cargaListaMapasConMapasObligatorios() {
 		String[] mapNames = ProGenContext.getMandatoryProperty("dominos.fitness.maps").split(",");
 		List<String> listaMapasPorDefecto = new ArrayList<String>();
-		listaMapasPorDefecto.addAll(Arrays.asList(mapNames));
+		for (String mapName:mapNames){
+			if (!mapName.equals("") && mapName != null)
+				listaMapasPorDefecto.add(mapName);
+		}
 		if (mapNames.length > NUMBER_OF_MAPS){
 			LISTA_NOMBRE_MAPAS =  listaMapasPorDefecto.subList(0, NUMBER_OF_MAPS);
 		}else{
@@ -174,7 +177,10 @@ public class Planetdominos extends UserProgram {
 	private void creaListaConBotsPorDefecto() {
 		String[] botNames = ProGenContext.getMandatoryProperty("dominos.fitness.bots").split(",");
 		List<String> listaBotsDefecto = new ArrayList<String>();
-		listaBotsDefecto.addAll(Arrays.asList(botNames));
+		for (String mapName:botNames){
+			if (!mapName.equals("") && mapName != null)
+				listaBotsDefecto.add(mapName);
+		}
 		if (listaBotsDefecto.size() > NUMBER_OF_BOTS) {
 			LISTA_NOMBRE_BOTS = listaBotsDefecto.subList(0, NUMBER_OF_BOTS); 
 		} else {
