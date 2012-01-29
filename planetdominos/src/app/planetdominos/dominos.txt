@@ -4,15 +4,15 @@
 #progen.population.init-mode=half&half$$grow=50%,full=0.5
 #progen.population.init-mode=full
 progen.population.init-mode=grow
-progen.population.size=50
+progen.population.size=200
 progen.population.init-depth-interval=5,15
 #progen.population.max-nodes=400
-progen.max-generation=1000
+progen.max-generation=500
 
-dominos.fitness.numberOfMaps=5
-dominos.fitness.numberOfBots=3
-dominos.fitness.maxTurnsPerGame=400
-dominos.fitness.totalGamesPerMap=20
+dominos.fitness.numberOfMaps=2
+dominos.fitness.numberOfBots=1
+dominos.fitness.maxTurnsPerGame=250
+dominos.fitness.totalGamesPerMap=5
 dominos.fitness.maps=
 dominos.fitness.bots=RandomBot,BullyBot,ProspectorBot,RageBot,FuryBot1,BullyBot
 
@@ -26,7 +26,7 @@ progen.functionSet0=\
  conditions.NumShipEquals, conditions.NumShipGreaterThan, conditions.NumShipLessThan, conditions.OrOperator, conditions.PlayerIDEquals,\
  cuantities.TotalOfFleetsFromPlayer, cuantities.TotalOfPlanetsFromPlayer, cuantities.TotalOfShipsFromPlayer, \
  orders.IfThenElse, orders.IssueOrderOverwhelm, orders.IssueOrderPercentageOfOrigin, orders.IssueOrderPercentageOfDestination, orders.IssueOrderToNearestPercentageOfOrigin, \
- orders.IssueOrderToNearestPercentageOfDestination, orders.NoOrder, orders.Prog2, \
+ orders.IssueOrderToNearestPercentageOfDestination, orders.NoOrder, \
  planetlists.All, planetlists.Enemy, planetlists.Neutral, planetlists.OwnedBy,\
  playerIds.MyId, playerIds.PlayerIdWithLessFleets, playerIds.PlayerIdWithLessPlanets, playerIds.PlayerIdWithLessShips, playerIds.PlayerIdWithMoreFleets, playerIds.PlayerIdWithMorePlanets, playerIds.PlayerIdWithMoreShips,\
  selectors.FastestGrowing, selectors.SlowestGrowing, selectors.Strongest, selectors.Weakest,\
