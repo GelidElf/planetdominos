@@ -323,9 +323,13 @@ public class BotWrapper extends Player {
 	}
 
 	protected Double porcentaje040() {
-		return Double.valueOf(0.45);
+		return Double.valueOf(0.40);
 	}
 
+	protected Double porcentaje045() {
+		return Double.valueOf(0.45);
+	}
+	
 	protected Double porcentaje050() {
 		return Double.valueOf(0.5);
 	}
