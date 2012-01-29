@@ -70,7 +70,7 @@ public class Planetdominos extends UserProgram {
 		double sessionFitnessResult = 0;
 		for (int i = 0; i < TOTAL_GAMES_PER_MAP; i++) {
 			game = new Game(MAP_DIRECTORY + "/" + mapName, MAX_TURNS_PER_GAME,
-					0);
+					0,false);
 			game.Init();
 			totalGamesPlayed++;
 			currentPlayer = new GPPlayer(individual, this);
@@ -97,7 +97,7 @@ public class Planetdominos extends UserProgram {
 			return penalizacion(turnos);
 		case 0:
 			// empatamos
-			return 1;
+			return 0.75;
 		default:
 			// perdimos
 			return 1;
@@ -224,7 +224,7 @@ public class Planetdominos extends UserProgram {
 
 		@Override
 		public boolean accept(File dir, String name) {
-			return (name.startsWith("map") && name.endsWith(".txt"));
+			return (name.startsWith("ourmap") && name.endsWith(".txt"));
 		}
 
 	}

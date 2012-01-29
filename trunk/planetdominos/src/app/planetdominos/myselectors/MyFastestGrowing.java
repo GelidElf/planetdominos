@@ -31,7 +31,7 @@ public class MyFastestGrowing extends Function {
 		}
 		Planet fastestPlanetFound = planetasEntrada.get(0);
 		for (Planet p: planetasEntrada){
-			if (p.GrowthRate() < fastestPlanetFound.GrowthRate()){
+			if (p.GrowthRate() > fastestPlanetFound.GrowthRate()){
 				fastestPlanetFound = p;
 			}
 		}
