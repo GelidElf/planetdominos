@@ -245,12 +245,11 @@ botOrders.addAll(issueOrderToNearestPercentageOfOrigin ( myStrongest () , enemy 
 		}
 		
 		int numeroNavesAEnviar = new Double(destino.NumShips()*porcentaje).intValue();
-		if(numeroNavesAEnviar == 0){
-			return Collections.emptyList();
-		}
-		
 		if (origen.NumShips() < numeroNavesAEnviar){
 			numeroNavesAEnviar = origen.NumShips();
+		}
+		if(numeroNavesAEnviar == 0){
+			return Collections.emptyList();
 		}
 		Order order = new Order(origen, destino, numeroNavesAEnviar);
 		List<Order> listaOrdenes = new ArrayList<Order>();
@@ -301,11 +300,11 @@ botOrders.addAll(issueOrderToNearestPercentageOfOrigin ( myStrongest () , enemy 
 		}
 		
 		int numeroNavesAEnviar = new Double(nearestPlanet.NumShips()*porcentaje).intValue();
-		if(numeroNavesAEnviar == 0){
-			return Collections.emptyList();
-		}
 		if (origen.NumShips() < numeroNavesAEnviar){
 			numeroNavesAEnviar = origen.NumShips();
+		}
+		if(numeroNavesAEnviar == 0){
+			return Collections.emptyList();
 		}
 		Order order = new Order(origen, nearestPlanet, numeroNavesAEnviar);
 		List<Order> listaOrdenes = new ArrayList<Order>();
