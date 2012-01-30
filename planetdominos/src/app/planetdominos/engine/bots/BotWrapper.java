@@ -412,13 +412,13 @@ public class BotWrapper extends Player {
 		// Si solo hay un jugador con flotas volando
 		// Devolvemos el identificador de ese jugador
 		if (numPlayersFromFleets.length == 1){
-			return numPlayersFromFleets[1];
+			return numPlayersFromFleets[0];
 		}
 		// Si hay más de 1 jugador con flotas
 		// 
-		int pIDLessFleets = numPlayersFromFleets[1];
+		int pIDLessFleets = numPlayersFromFleets[0];
 		int lowestNumberOfFleets = g.MyFleets(pIDLessFleets).size();
-		for (int i = 1; i< numPlayersFromFleets.length;i++) {
+		for (int i = 1; i < numPlayersFromFleets.length;i++) {
 			if (lowestNumberOfFleets > g.MyFleets(numPlayersFromFleets[i]).size()) {
 				lowestNumberOfFleets = g.MyFleets(numPlayersFromFleets[i]).size();
 				pIDLessFleets = numPlayersFromFleets[i];
@@ -428,12 +428,24 @@ public class BotWrapper extends Player {
 	}
 
 	protected int playerIdWithLessPlanets() {
-		int pIDLessPlanets = 1;
+		Integer[] numPlayersFromPlanets = (Integer[]) g.getNumPlayersFromPlanets().toArray();
+		//Si no hay jugadores con planetas
+		//Devolvemos 0
+		if(numPlayersFromPlanets.length == 0){
+			return 0; 
+		}
+		//Si solo hay un jugador con planetas
+		//Devolvemos el identificador de ese jugador
+		if(numPlayersFromPlanets.length == 1){
+			return numPlayersFromPlanets[0];
+		}
+		//Si hay más de un jugador con planetas
+		int pIDLessPlanets = numPlayersFromPlanets[0];
 		int lowestNumberOfPlanets = g.MyPlanets(pIDLessPlanets).size();
-		for (Integer pID : g.getNumPlayersFromPlanets()) {
-			if (lowestNumberOfPlanets > g.MyPlanets(pID).size()) {
-				lowestNumberOfPlanets = g.MyPlanets(pID).size();
-				pIDLessPlanets = pID;
+		for (int i = 1; i < numPlayersFromPlanets.length; i++) {
+			if (lowestNumberOfPlanets > g.MyPlanets(numPlayersFromPlanets[i]).size()) {
+				lowestNumberOfPlanets = g.MyPlanets(numPlayersFromPlanets[i]).size();
+				pIDLessPlanets = numPlayersFromPlanets[i];
 			}
 		}
 		return pIDLessPlanets;
@@ -452,24 +464,49 @@ public class BotWrapper extends Player {
 	}
 
 	protected int playerIdWithMoreFleets() {
-		int pIDMoreFleets = 1;
+		Integer[] numPlayersFromFleets = (Integer[]) g.getNumPlayersFromFleets().toArray();
+		//Si no hay jugadores con flotas volando
+		//Devolvemos 0
+		if (numPlayersFromFleets.length == 0){
+			return 0; //Habra que ver si devolviendo 0 puede que nos haga el dropplayer
+		}
+		// Si solo hay un jugador con flotas volando
+		// Devolvemos el identificador de ese jugador
+		if (numPlayersFromFleets.length == 1){
+			return numPlayersFromFleets[0];
+		}
+		// Si hay más de 1 jugador con flotas
+		// 
+		int pIDMoreFleets = numPlayersFromFleets[0];
 		int highestNumberOfFleets = g.MyFleets(pIDMoreFleets).size();
-		for (Integer pID : g.getNumPlayersFromFleets()) {
-			if (highestNumberOfFleets < g.MyFleets(pID).size()) {
-				highestNumberOfFleets = g.MyFleets(pID).size();
-				pIDMoreFleets = pID;
+		for (int i = 1; i < numPlayersFromFleets.length;i++) {
+			if (highestNumberOfFleets < g.MyFleets(numPlayersFromFleets[i]).size()) {
+				highestNumberOfFleets = g.MyFleets(numPlayersFromFleets[i]).size();
+				pIDMoreFleets = numPlayersFromFleets[i];
 			}
 		}
 		return pIDMoreFleets;
 	}
 
 	protected int playerIdWithMorePlanets() {
-		int pIDMorePlanets = 1;
+		Integer[] numPlayersFromPlanets = (Integer[]) g.getNumPlayersFromPlanets().toArray();
+		//Si no hay jugadores con planetas
+		//Devolvemos 0
+		if(numPlayersFromPlanets.length == 0){
+			return 0; 
+		}
+		//Si solo hay un jugador con planetas
+		//Devolvemos el identificador de ese jugador
+		if(numPlayersFromPlanets.length == 1){
+			return numPlayersFromPlanets[0];
+		}
+		//Si hay más de un jugador con planetas
+		int pIDMorePlanets = numPlayersFromPlanets[0];
 		int highestNumberOfPlanets = g.MyPlanets(pIDMorePlanets).size();
-		for (Integer pID : g.getNumPlayersFromPlanets()) {
-			if (highestNumberOfPlanets > g.MyPlanets(pID).size()) {
-				highestNumberOfPlanets = g.MyPlanets(pID).size();
-				pIDMorePlanets = pID;
+		for (int i = 1; i < numPlayersFromPlanets.length; i++) {
+			if (highestNumberOfPlanets < g.MyPlanets(numPlayersFromPlanets[i]).size()) {
+				highestNumberOfPlanets = g.MyPlanets(numPlayersFromPlanets[i]).size();
+				pIDMorePlanets = numPlayersFromPlanets[i];
 			}
 		}
 		return pIDMorePlanets;

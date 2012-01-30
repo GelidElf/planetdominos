@@ -24,14 +24,23 @@ public class PlayerIdWithLessFleets extends Terminal {
 	public Object evaluate(List<Node> arguments, UserProgram userProgram,
 			HashMap<String, Object> returnAddr) {
 		Planetdominos dominos = (Planetdominos) userProgram;
-		int pIDLessFleets = 1;
+		Integer[] numPlayersFromFleets = (Integer[]) dominos.getGame().getNumPlayersFromFleets().toArray();
+		if (numPlayersFromFleets.length == 0){
+			return 0; //Habra que ver si devolviendo 0 puede que nos haga el dropplayer
+		}
+		if (numPlayersFromFleets.length == 1){
+			return numPlayersFromFleets[0];
+		}
+		int pIDLessFleets = numPlayersFromFleets[0];
 		int lowestNumberOfFleets = dominos.getGame().MyFleets(pIDLessFleets).size();
-		for (Integer pID: dominos.getGame().getNumPlayersFromFleets()){
-			if (lowestNumberOfFleets > dominos.getGame().MyFleets(pID).size()){
-				lowestNumberOfFleets = dominos.getGame().MyFleets(pID).size();
-				pIDLessFleets = pID;
+		for (int i = 1; i < numPlayersFromFleets.length;i++){
+			if (lowestNumberOfFleets > dominos.getGame().MyFleets(numPlayersFromFleets[i]).size()){
+				lowestNumberOfFleets = dominos.getGame().MyFleets(numPlayersFromFleets[i]).size();
+				pIDLessFleets = numPlayersFromFleets[i];
 			}
 		}
 		return pIDLessFleets;
 	}
 }
+
+
