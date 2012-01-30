@@ -85,7 +85,7 @@ public class Planetdominos extends UserProgram {
 			total += fitnessDelBotEnPartida(botList);
 			totalGamesPlayed++;
 		}
-		return total/LISTA_NOMBRE_BOTS.size();
+		return total;
 	}
 	
 	/**
@@ -96,8 +96,7 @@ public class Planetdominos extends UserProgram {
 	 * @return
 	 */
 	private double fitnessDelBotEnPartida(List<String> botList) {
-		int winner = engine.runGame(game, currentPlayer, botList,
-				false);
+		int winner = engine.runGame(game, currentPlayer, botList, false);
 		int turnos = game.getNumTurns();
 		switch (winner) {
 		case 1:
