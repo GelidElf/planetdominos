@@ -247,6 +247,7 @@ public class Game implements Cloneable {
 	// Kicks a player out of the game. This is used in cases where a player
 	// tries to give an illegal order or runs over the time limit.
 	public void DropPlayer(int playerID) {
+		System.out.println("Dropped player" + playerID + " y nº de turnos " + numTurns);
 		for (Planet p : planets) {
 			if (p.Owner() == playerID) {
 				p.Owner(0);
