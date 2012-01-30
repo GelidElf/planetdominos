@@ -1,5 +1,6 @@
 package app.planetdominos.playerIds;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,19 +25,19 @@ public class PlayerIdWithLessPlanets extends Terminal {
 	public Object evaluate(List<Node> arguments, UserProgram userProgram,
 			HashMap<String, Object> returnAddr) {
 		Planetdominos dominos = (Planetdominos) userProgram;
-		Integer[] numPlayersFromPlanets = (Integer[]) dominos.getGame().getNumPlayersFromPlanets().toArray();
-		if(numPlayersFromPlanets.length == 0){
+		List<Integer> numPlayersFromPlanets = new ArrayList<Integer>(dominos.getGame().getNumPlayersFromPlanets());
+		if(numPlayersFromPlanets.size() == 0){
 			return 0; 
 		}
-		if(numPlayersFromPlanets.length == 1){
-			return numPlayersFromPlanets[0];
+		if(numPlayersFromPlanets.size() == 1){
+			return numPlayersFromPlanets.get(0);
 		}
-		int pIDLessPlanets = numPlayersFromPlanets[0];
+		int pIDLessPlanets = numPlayersFromPlanets.get(0);
 		int lowestNumberOfPlanets = dominos.getGame().MyPlanets(pIDLessPlanets).size();
-		for (int i = 1; i < numPlayersFromPlanets.length; i++){
-			if (lowestNumberOfPlanets > dominos.getGame().MyPlanets(numPlayersFromPlanets[i]).size()){
-				lowestNumberOfPlanets = dominos.getGame().MyPlanets(numPlayersFromPlanets[i]).size();
-				pIDLessPlanets = numPlayersFromPlanets[i];
+		for (Integer pID:numPlayersFromPlanets){
+			if (lowestNumberOfPlanets > dominos.getGame().MyPlanets(pID).size()){
+				lowestNumberOfPlanets = dominos.getGame().MyPlanets(pID).size();
+				pIDLessPlanets = pID;
 			}
 		}
 		return pIDLessPlanets;
