@@ -38,6 +38,8 @@ public class RandomBot extends Player {
 		// (4) Send half the ships from source to dest.
 		if (source != null && dest != null) {
 			int numShips = source.NumShips() / 2;
+			if (numShips == 0)
+				numShips = source.NumShips();
 			botOrders.add(new Order(source, dest, numShips));
 		}
 		

@@ -1,6 +1,7 @@
 package app.gpwars.engine.bots;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import app.gpwars.engine.Game;
@@ -26,6 +27,8 @@ public class FuryBot1 extends Player {
 				}
 			}
 			if (dest != null) {
+				if (source.NumShips() == 0)
+					return Collections.emptyList();
 				botOrders.add(new Order(source, dest, source.NumShips()));
 			}
 		}
