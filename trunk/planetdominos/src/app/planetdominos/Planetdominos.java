@@ -3,7 +3,6 @@ package app.planetdominos;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -189,7 +188,9 @@ public class Planetdominos extends UserProgram {
 		for (String botName:botNames){
 			if (!botName.equals("") && botName != null){
 				List<String> parte = new ArrayList<String>();
-				parte.add(botName);
+				for (String bot:botName.split(":")){
+					parte.add(bot);
+				}
 				listaBotsDefecto.add(parte);
 			}
 		}
