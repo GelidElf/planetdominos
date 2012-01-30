@@ -27,10 +27,10 @@ public class IfThenElse extends Function{
 			HashMap<String, Object> returnAddr) {
 		
 		Boolean condicion = (Boolean)arguments.get(0).evaluate(userProgram, returnAddr);
-		List<Order> listaOrdenes1 = (List<Order>) arguments.get(1).evaluate(userProgram, returnAddr);
-		List<Order> listaOrdenes2 = (List<Order>) arguments.get(2).evaluate(userProgram, returnAddr);
-		
-		return (condicion)?listaOrdenes1:listaOrdenes2;
+		if (condicion)
+			return (List<Order>) arguments.get(1).evaluate(userProgram, returnAddr);
+		else
+			return  (List<Order>) arguments.get(2).evaluate(userProgram, returnAddr);
 	}
 
 }
