@@ -24,12 +24,19 @@ public class PlayerIdWithMorePlanets extends Terminal {
 	public Object evaluate(List<Node> arguments, UserProgram userProgram,
 			HashMap<String, Object> returnAddr) {
 		Planetdominos dominos = (Planetdominos) userProgram;
-		int pIDMorePlanets = 1;
+		Integer[] numPlayersFromPlanets = (Integer[]) dominos.getGame().getNumPlayersFromPlanets().toArray();
+		if(numPlayersFromPlanets.length == 0){
+			return 0; 
+		}
+		if(numPlayersFromPlanets.length == 1){
+			return numPlayersFromPlanets[0];
+		}
+		int pIDMorePlanets = numPlayersFromPlanets[0];
 		int highestNumberOfPlanets = dominos.getGame().MyPlanets(pIDMorePlanets).size();
-		for (Integer pID: dominos.getGame().getNumPlayersFromFleets()){
-			if (highestNumberOfPlanets < dominos.getGame().MyPlanets(pID).size()){
-				highestNumberOfPlanets = dominos.getGame().MyPlanets(pID).size();
-				pIDMorePlanets = pID;
+		for (int i = 1; i < numPlayersFromPlanets.length; i++){
+			if (highestNumberOfPlanets < dominos.getGame().MyPlanets(numPlayersFromPlanets[i]).size()){
+				highestNumberOfPlanets = dominos.getGame().MyPlanets(numPlayersFromPlanets[i]).size();
+				pIDMorePlanets = numPlayersFromPlanets[i];
 			}
 		}
 		return pIDMorePlanets;
