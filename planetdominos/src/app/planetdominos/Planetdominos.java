@@ -72,7 +72,7 @@ public class Planetdominos extends UserProgram {
 			game = new Game(MAP_DIRECTORY + "/" + mapName, MAX_TURNS_PER_GAME,
 					0,false);
 			game.Init();
-			totalGamesPlayed++;
+			//totalGamesPlayed++;
 			currentPlayer = new GPPlayer(individual, this);
 
 			sessionFitnessResult += fitnessDelBotVsCadaBot();
@@ -84,12 +84,13 @@ public class Planetdominos extends UserProgram {
 		double total = 0.0;
 		for (List<String> botList: LISTA_NOMBRE_BOTS){
 			total += fitnessDelBotEnPartida(botList);
+			totalGamesPlayed++;
 		}
 		return total/LISTA_NOMBRE_BOTS.size();
 	}
 	
 	/**
-	 * For each game must we give a fitness, 0 for est fitness, 1 for worst
+	 * For each game we must give a fitness, 0 for est fitness, 1 for worst
 	 * fitness
 	 * 
 	 * @param resultado
@@ -119,7 +120,7 @@ public class Planetdominos extends UserProgram {
 	 * @return
 	 */
 	private double penalizacion(int turnos) {
-		if (turnos == MAX_TURNS_PER_GAME) {
+		if (turnos >= MAX_TURNS_PER_GAME) {
 			return 0.5;
 		} else {
 			return 0.25 * (turnos / MAX_TURNS_PER_GAME);
