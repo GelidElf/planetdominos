@@ -1,5 +1,6 @@
 package app.planetdominos.playerIds;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,19 +25,19 @@ public class PlayerIdWithMorePlanets extends Terminal {
 	public Object evaluate(List<Node> arguments, UserProgram userProgram,
 			HashMap<String, Object> returnAddr) {
 		Planetdominos dominos = (Planetdominos) userProgram;
-		Integer[] numPlayersFromPlanets = (Integer[]) dominos.getGame().getNumPlayersFromPlanets().toArray();
-		if(numPlayersFromPlanets.length == 0){
+		List<Integer> numPlayersFromPlanets = new ArrayList<Integer>(dominos.getGame().getNumPlayersFromPlanets());
+		if(numPlayersFromPlanets.size() == 0){
 			return 0; 
 		}
-		if(numPlayersFromPlanets.length == 1){
-			return numPlayersFromPlanets[0];
+		if(numPlayersFromPlanets.size() == 1){
+			return numPlayersFromPlanets.get(0);
 		}
-		int pIDMorePlanets = numPlayersFromPlanets[0];
+		int pIDMorePlanets = numPlayersFromPlanets.get(0);
 		int highestNumberOfPlanets = dominos.getGame().MyPlanets(pIDMorePlanets).size();
-		for (int i = 1; i < numPlayersFromPlanets.length; i++){
-			if (highestNumberOfPlanets < dominos.getGame().MyPlanets(numPlayersFromPlanets[i]).size()){
-				highestNumberOfPlanets = dominos.getGame().MyPlanets(numPlayersFromPlanets[i]).size();
-				pIDMorePlanets = numPlayersFromPlanets[i];
+		for (Integer pID:numPlayersFromPlanets){
+			if (highestNumberOfPlanets < dominos.getGame().MyPlanets(pID).size()){
+				highestNumberOfPlanets = dominos.getGame().MyPlanets(pID).size();
+				pIDMorePlanets = pID;
 			}
 		}
 		return pIDMorePlanets;

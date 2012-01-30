@@ -1,5 +1,6 @@
 package app.planetdominos.playerIds;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,19 +25,19 @@ public class PlayerIdWithMoreFleets extends Terminal {
 	public Object evaluate(List<Node> arguments, UserProgram userProgram,
 			HashMap<String, Object> returnAddr) {
 		Planetdominos dominos = (Planetdominos) userProgram;
-		Integer[] numPlayersFromFleets = (Integer[]) dominos.getGame().getNumPlayersFromFleets().toArray();
-		if (numPlayersFromFleets.length == 0){
-			return 0; //Habra que ver si devolviendo 0 puede que nos haga el dropplayer
+		List<Integer> numPlayersFromFleets = new ArrayList<Integer>(dominos.getGame().getNumPlayersFromFleets());
+		if (numPlayersFromFleets.size() == 0){
+			return 0; 
 		}
-		if (numPlayersFromFleets.length == 1){
-			return numPlayersFromFleets[0];
+		if (numPlayersFromFleets.size() == 1){
+			return numPlayersFromFleets.get(0);
 		}
-		int pIDMoreFleets = numPlayersFromFleets[0];
+		int pIDMoreFleets = numPlayersFromFleets.get(0);
 		int highestNumberOfFleets = dominos.getGame().MyFleets(pIDMoreFleets).size();
-		for (int i = 1; i < numPlayersFromFleets.length;i++){
-			if (highestNumberOfFleets < dominos.getGame().MyFleets(numPlayersFromFleets[i]).size()){
-				highestNumberOfFleets = dominos.getGame().MyFleets(numPlayersFromFleets[i]).size();
-				pIDMoreFleets = numPlayersFromFleets[i];
+		for (Integer pID:numPlayersFromFleets){
+			if (highestNumberOfFleets < dominos.getGame().MyFleets(pID).size()){
+				highestNumberOfFleets = dominos.getGame().MyFleets(pID).size();
+				pIDMoreFleets = pID;
 			}
 		}
 		return pIDMoreFleets;
