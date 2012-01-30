@@ -192,6 +192,13 @@ public class Planetdominos extends UserProgram {
 					parte.add(bot);
 				}
 				listaBotsDefecto.add(parte);
+				ArrayList<String> alteradosArrayList;
+				for (int i = 0; i<parte.size()-1;i++){
+					alteradosArrayList = new ArrayList<String>();
+					alteradosArrayList.addAll(parte.subList(i+1, parte.size()));
+					alteradosArrayList.addAll(parte.subList(0, i+1));
+					listaBotsDefecto.add(alteradosArrayList);
+				}
 			}
 		}
 		if (listaBotsDefecto.size() > NUMBER_OF_BOTS) {
