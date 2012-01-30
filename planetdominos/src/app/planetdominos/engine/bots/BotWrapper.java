@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import app.gpwars.engine.Game;
 import app.gpwars.engine.Order;
@@ -402,12 +403,25 @@ public class BotWrapper extends Player {
 	}
 
 	protected int playerIdWithLessFleets() {
-		int pIDLessFleets = 1;
+		Integer[] numPlayersFromFleets = (Integer[]) g.getNumPlayersFromFleets().toArray();
+		//Si no hay jugadores con flotas volando
+		//Devolvemos 0
+		if (numPlayersFromFleets.length == 0){
+			return 0; //Habra que ver si devolviendo 0 puede que nos haga el dropplayer
+		}
+		// Si solo hay un jugador con flotas volando
+		// Devolvemos el identificador de ese jugador
+		if (numPlayersFromFleets.length == 1){
+			return numPlayersFromFleets[1];
+		}
+		// Si hay más de 1 jugador con flotas
+		// 
+		int pIDLessFleets = numPlayersFromFleets[1];
 		int lowestNumberOfFleets = g.MyFleets(pIDLessFleets).size();
-		for (Integer pID : g.getNumPlayersFromFleets()) {
-			if (lowestNumberOfFleets > g.MyFleets(pID).size()) {
-				lowestNumberOfFleets = g.MyFleets(pID).size();
-				pIDLessFleets = pID;
+		for (int i = 1; i< numPlayersFromFleets.length;i++) {
+			if (lowestNumberOfFleets > g.MyFleets(numPlayersFromFleets[i]).size()) {
+				lowestNumberOfFleets = g.MyFleets(numPlayersFromFleets[i]).size();
+				pIDLessFleets = numPlayersFromFleets[i];
 			}
 		}
 		return pIDLessFleets;
