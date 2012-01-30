@@ -39,6 +39,8 @@ public class BullyBot extends Player{
 		// planet that I do not own.
 		if (source != null && dest != null) {
 			int numShips = source.NumShips() / 2;
+			if (numShips == 0)
+				numShips = source.NumShips();
 			botOrders.add(new Order(source, dest, numShips));
 		}
 		
