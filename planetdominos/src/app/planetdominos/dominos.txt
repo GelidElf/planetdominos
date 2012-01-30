@@ -10,11 +10,11 @@ progen.population.init-depth-interval=5,15
 progen.max-generation=500
 
 dominos.fitness.numberOfMaps=2
-dominos.fitness.numberOfBots=1
+dominos.fitness.numberOfBots=3
 dominos.fitness.maxTurnsPerGame=250
 dominos.fitness.totalGamesPerMap=5
 dominos.fitness.maps=
-dominos.fitness.bots=RandomBot,BullyBot,ProspectorBot,RageBot,FuryBot1,BullyBot
+dominos.fitness.bots=BullyBot,ProspectorBot,RageBot,FuryBot1,BullyBot
 
 #***********************************************
 #        FUNCTION SETS and ADFS                *
