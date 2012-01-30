@@ -27,7 +27,7 @@ public class Planetdominos extends UserProgram {
 	private static Integer TOTAL_GAMES_PER_MAP = Integer.parseInt(ProGenContext.getMandatoryProperty("dominos.fitness.totalGamesPerMap"));
 
 	private static List<String> LISTA_NOMBRE_MAPAS = null;
-	private static List<String> LISTA_NOMBRE_BOTS = null;
+	private static List<List<String>> LISTA_NOMBRE_BOTS = null;
 
 	private Game game;
 
@@ -75,11 +75,19 @@ public class Planetdominos extends UserProgram {
 			totalGamesPlayed++;
 			currentPlayer = new GPPlayer(individual, this);
 
-			sessionFitnessResult += fitnessDelBotEnPartida();
+			sessionFitnessResult += fitnessDelBotVsCadaBot();
 		}
 		return sessionFitnessResult;
 	}
 
+	private double fitnessDelBotVsCadaBot(){
+		double total = 0.0;
+		for (List<String> botList: LISTA_NOMBRE_BOTS){
+			total += fitnessDelBotEnPartida(botList);
+		}
+		return total/LISTA_NOMBRE_BOTS.size();
+	}
+	
 	/**
 	 * For each game must we give a fitness, 0 for est fitness, 1 for worst
 	 * fitness
@@ -87,8 +95,8 @@ public class Planetdominos extends UserProgram {
 	 * @param resultado
 	 * @return
 	 */
-	private double fitnessDelBotEnPartida() {
-		int winner = engine.runGame(game, currentPlayer, LISTA_NOMBRE_BOTS,
+	private double fitnessDelBotEnPartida(List<String> botList) {
+		int winner = engine.runGame(game, currentPlayer, botList,
 				false);
 		int turnos = game.getNumTurns();
 		switch (winner) {
@@ -169,17 +177,20 @@ public class Planetdominos extends UserProgram {
 
 	private void imprimeListaDeBotsSeleccionados() {
 		System.out.println("Lista de bots seleccionados: ");
-		for (String botName : LISTA_NOMBRE_BOTS) {
+		for (List<String> botName : LISTA_NOMBRE_BOTS) {
 			System.out.println("    " + botName);
 		}
 	}
 
 	private void creaListaConBotsPorDefecto() {
 		String[] botNames = ProGenContext.getMandatoryProperty("dominos.fitness.bots").split(",");
-		List<String> listaBotsDefecto = new ArrayList<String>();
-		for (String mapName:botNames){
-			if (!mapName.equals("") && mapName != null)
-				listaBotsDefecto.add(mapName);
+		List<List<String>> listaBotsDefecto = new ArrayList<List<String>>();
+		for (String botName:botNames){
+			if (!botName.equals("") && botName != null){
+				List<String> parte = new ArrayList<String>();
+				parte.add(botName);
+				listaBotsDefecto.add(parte);
+			}
 		}
 		if (listaBotsDefecto.size() > NUMBER_OF_BOTS) {
 			LISTA_NOMBRE_BOTS = listaBotsDefecto.subList(0, NUMBER_OF_BOTS); 
@@ -197,8 +208,10 @@ public class Planetdominos extends UserProgram {
 			for (int i = LISTA_NOMBRE_BOTS.size(); i < NUMBER_OF_BOTS; i++) {
 				int mapIndex = r.nextInt(fileList.length);
 				String className = fileList[mapIndex].getName();
-				LISTA_NOMBRE_BOTS.add(className.substring(0,
+				List<String> parte = new ArrayList<String>();
+				parte.add(className.substring(0,
 						className.length() - 6));
+				LISTA_NOMBRE_BOTS.add(parte);
 			}
 		}
 	}
@@ -230,7 +243,7 @@ public class Planetdominos extends UserProgram {
 
 		@Override
 		public boolean accept(File dir, String name) {
-			return (name.startsWith("ourmap") && name.endsWith(".txt"));
+			return (name.startsWith("map") && name.endsWith(".txt"));
 		}
 
 	}
