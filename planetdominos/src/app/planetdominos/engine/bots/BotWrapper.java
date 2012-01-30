@@ -171,8 +171,8 @@ public class BotWrapper extends Player {
 
 		int numeroNavesAEnviar = 0;
 
-		if (origen.NumShips() > destino.NumShips()) {
-			numeroNavesAEnviar = destino.NumShips();
+		if (origen.NumShips() > destino.NumShips()+1){
+			numeroNavesAEnviar = destino.NumShips()+1;
 		} else {
 			numeroNavesAEnviar = origen.NumShips();
 		}
