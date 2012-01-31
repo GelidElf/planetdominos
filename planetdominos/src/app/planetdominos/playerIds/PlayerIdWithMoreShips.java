@@ -26,7 +26,7 @@ public class PlayerIdWithMoreShips extends Terminal {
 		Planetdominos dominos = (Planetdominos) userProgram;
 		int pIDMoreShips = 1;
 		int highestNumberOfShips = dominos.getGame().NumShips(pIDMoreShips);
-		for (Integer pID: dominos.getGame().getNumPlayersFromFleets()){
+		for (Integer pID: dominos.getGame().gonzaloCaneladaLorenaPrieto_getNumPlayersFromFleets()){
 			if (highestNumberOfShips < dominos.getGame().NumShips(pID)){
 				highestNumberOfShips = dominos.getGame().NumShips(pID);
 				pIDMoreShips = pID;
