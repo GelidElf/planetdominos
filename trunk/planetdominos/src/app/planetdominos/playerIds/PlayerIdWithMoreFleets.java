@@ -25,7 +25,7 @@ public class PlayerIdWithMoreFleets extends Terminal {
 	public Object evaluate(List<Node> arguments, UserProgram userProgram,
 			HashMap<String, Object> returnAddr) {
 		Planetdominos dominos = (Planetdominos) userProgram;
-		List<Integer> numPlayersFromFleets = new ArrayList<Integer>(dominos.getGame().getNumPlayersFromFleets());
+		List<Integer> numPlayersFromFleets = new ArrayList<Integer>(dominos.getGame().gonzaloCaneladaLorenaPrieto_getNumPlayersFromFleets());
 		if (numPlayersFromFleets.size() == 0){
 			return 0; 
 		}
