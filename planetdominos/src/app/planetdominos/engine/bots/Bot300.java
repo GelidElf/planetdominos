@@ -463,7 +463,7 @@ botOrders.addAll(issueOrderToNearestPercentageOfDestination ( myWeakest () , all
 	protected int playerIdWithLessFleets() {
 		int pIDLessFleets = 1;
 		int lowestNumberOfFleets = g.MyFleets(pIDLessFleets).size();
-		for (Integer pID : g.getNumPlayersFromFleets()) {
+		for (Integer pID : g.gonzaloCaneladaLorenaPrieto_getNumPlayersFromFleets()) {
 			if (lowestNumberOfFleets > g.MyFleets(pID).size()) {
 				lowestNumberOfFleets = g.MyFleets(pID).size();
 				pIDLessFleets = pID;
@@ -475,7 +475,7 @@ botOrders.addAll(issueOrderToNearestPercentageOfDestination ( myWeakest () , all
 	protected int playerIdWithLessPlanets() {
 		int pIDLessPlanets = 1;
 		int lowestNumberOfPlanets = g.MyPlanets(pIDLessPlanets).size();
-		for (Integer pID : g.getNumPlayersFromPlanets()) {
+		for (Integer pID : g.gonzaloCaneladaLorenaPrieto_getNumPlayersFromPlanets()) {
 			if (lowestNumberOfPlanets > g.MyPlanets(pID).size()) {
 				lowestNumberOfPlanets = g.MyPlanets(pID).size();
 				pIDLessPlanets = pID;
@@ -487,7 +487,7 @@ botOrders.addAll(issueOrderToNearestPercentageOfDestination ( myWeakest () , all
 	protected int playerIdWithLessShips() {
 		int pIDLessShips = 1;
 		int lowestNumberOfShips = g.NumShips(pIDLessShips);
-		for (Integer pID : g.getNumPlayersFromFleets()) {
+		for (Integer pID : g.gonzaloCaneladaLorenaPrieto_getNumPlayersFromFleets()) {
 			if (lowestNumberOfShips > g.NumShips(pID)) {
 				lowestNumberOfShips = g.NumShips(pID);
 				pIDLessShips = pID;
@@ -499,7 +499,7 @@ botOrders.addAll(issueOrderToNearestPercentageOfDestination ( myWeakest () , all
 	protected int playerIdWithMoreFleets() {
 		int pIDMoreFleets = 1;
 		int highestNumberOfFleets = g.MyFleets(pIDMoreFleets).size();
-		for (Integer pID : g.getNumPlayersFromFleets()) {
+		for (Integer pID : g.gonzaloCaneladaLorenaPrieto_getNumPlayersFromFleets()) {
 			if (highestNumberOfFleets < g.MyFleets(pID).size()) {
 				highestNumberOfFleets = g.MyFleets(pID).size();
 				pIDMoreFleets = pID;
@@ -511,7 +511,7 @@ botOrders.addAll(issueOrderToNearestPercentageOfDestination ( myWeakest () , all
 	protected int playerIdWithMorePlanets() {
 		int pIDMorePlanets = 1;
 		int highestNumberOfPlanets = g.MyPlanets(pIDMorePlanets).size();
-		for (Integer pID : g.getNumPlayersFromPlanets()) {
+		for (Integer pID : g.gonzaloCaneladaLorenaPrieto_getNumPlayersFromPlanets()) {
 			if (highestNumberOfPlanets > g.MyPlanets(pID).size()) {
 				highestNumberOfPlanets = g.MyPlanets(pID).size();
 				pIDMorePlanets = pID;
@@ -523,7 +523,7 @@ botOrders.addAll(issueOrderToNearestPercentageOfDestination ( myWeakest () , all
 	protected int playerIdWithMoreShips() {
 		int pIDMoreShips = 1;
 		int highestNumberOfShips = g.NumShips(pIDMoreShips);
-		for (Integer pID : g.getNumPlayersFromShips()) {
+		for (Integer pID : g.gonzaloCaneladaLorenaPrieto_getNumPlayersFromShips()) {
 			if (highestNumberOfShips < g.NumShips(pID)) {
 				highestNumberOfShips = g.NumShips(pID);
 				pIDMoreShips = pID;
