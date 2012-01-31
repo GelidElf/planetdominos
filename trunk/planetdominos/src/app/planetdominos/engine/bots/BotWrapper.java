@@ -417,7 +417,7 @@ public class BotWrapper extends Player {
 	}
 
 	protected int playerIdWithLessFleets() {
-		List<Integer> numPlayersFromFleets = new ArrayList<Integer>(g.getNumPlayersFromFleets());
+		List<Integer> numPlayersFromFleets = new ArrayList<Integer>(g.gonzaloCaneladaLorenaPrieto_getNumPlayersFromFleets());
 		if (numPlayersFromFleets.size() == 0){
 			return 0; //Habra que ver si devolviendo 0 puede que nos haga el dropplayer
 		}
@@ -436,7 +436,7 @@ public class BotWrapper extends Player {
 	}
 
 	protected int playerIdWithLessPlanets() {
-		List<Integer> numPlayersFromPlanets = new ArrayList<Integer>(g.getNumPlayersFromPlanets());
+		List<Integer> numPlayersFromPlanets = new ArrayList<Integer>(g.gonzaloCaneladaLorenaPrieto_getNumPlayersFromPlanets());
 		if(numPlayersFromPlanets.size() == 0){
 			return 0; 
 		}
@@ -457,7 +457,7 @@ public class BotWrapper extends Player {
 	protected int playerIdWithLessShips() {
 		int pIDLessShips = 1;
 		int lowestNumberOfShips = g.NumShips(pIDLessShips);
-		for (Integer pID : g.getNumPlayersFromFleets()) {
+		for (Integer pID : g.gonzaloCaneladaLorenaPrieto_getNumPlayersFromFleets()) {
 			if (lowestNumberOfShips > g.NumShips(pID)) {
 				lowestNumberOfShips = g.NumShips(pID);
 				pIDLessShips = pID;
@@ -467,7 +467,7 @@ public class BotWrapper extends Player {
 	}
 
 	protected int playerIdWithMoreFleets() {
-		List<Integer> numPlayersFromFleets = new ArrayList<Integer>(g.getNumPlayersFromFleets());
+		List<Integer> numPlayersFromFleets = new ArrayList<Integer>(g.gonzaloCaneladaLorenaPrieto_getNumPlayersFromFleets());
 		if (numPlayersFromFleets.size() == 0){
 			return 0; 
 		}
@@ -486,7 +486,7 @@ public class BotWrapper extends Player {
 	}
 
 	protected int playerIdWithMorePlanets() {
-		List<Integer> numPlayersFromPlanets = new ArrayList<Integer> (g.getNumPlayersFromPlanets());
+		List<Integer> numPlayersFromPlanets = new ArrayList<Integer> (g.gonzaloCaneladaLorenaPrieto_getNumPlayersFromPlanets());
 		if(numPlayersFromPlanets.size() == 0){
 			return 0; 
 		}
@@ -507,7 +507,7 @@ public class BotWrapper extends Player {
 	protected int playerIdWithMoreShips() {
 		int pIDMoreShips = 1;
 		int highestNumberOfShips = g.NumShips(pIDMoreShips);
-		for (Integer pID : g.getNumPlayersFromShips()) {
+		for (Integer pID : g.gonzaloCaneladaLorenaPrieto_getNumPlayersFromShips()) {
 			if (highestNumberOfShips < g.NumShips(pID)) {
 				highestNumberOfShips = g.NumShips(pID);
 				pIDMoreShips = pID;
