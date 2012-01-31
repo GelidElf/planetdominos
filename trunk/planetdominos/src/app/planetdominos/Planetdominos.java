@@ -3,8 +3,10 @@ package app.planetdominos;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import progen.context.ProGenContext;
 import progen.kernel.population.Individual;
@@ -39,12 +41,14 @@ public class Planetdominos extends UserProgram {
 	private double totalFitness;
 
 	private Individual individual;
+	private Random random;
 
 	@Override
 	public double fitness(Individual individual) {
 		this.individual = individual;
 		totalGamesPlayed = 0;
 		totalFitness = 0;
+		random = new Random();
 		compruebaYCargaVariablesDesdeElContexto();
 		creaListaDeBotsSiNull();
 		creaListaDeMapasSiNull();
@@ -182,30 +186,24 @@ public class Planetdominos extends UserProgram {
 	}
 
 	private void creaListaConBotsPorDefecto() {
+		LISTA_NOMBRE_BOTS = new ArrayList<List<String>>();
 		String[] botNames = ProGenContext.getMandatoryProperty("dominos.fitness.bots").split(",");
-		List<List<String>> listaBotsDefecto = new ArrayList<List<String>>();
-		for (String botName:botNames){
-			if (!botName.equals("") && botName != null){
-				List<String> parte = new ArrayList<String>();
-				for (String bot:botName.split(":")){
-					parte.add(bot);
-				}
-				listaBotsDefecto.add(parte);
-				ArrayList<String> alteradosArrayList;
-				for (int i = 0; i<parte.size()-1;i++){
-					alteradosArrayList = new ArrayList<String>();
-					alteradosArrayList.addAll(parte.subList(i+1, parte.size()));
-					alteradosArrayList.addAll(parte.subList(0, i+1));
-					listaBotsDefecto.add(alteradosArrayList);
-				}
-			}
+		for (int i = 0; i<NUMBER_OF_BOTS ;i++){
+			LISTA_NOMBRE_BOTS.add(creaListaBots(3,botNames));
 		}
-		if (listaBotsDefecto.size() > NUMBER_OF_BOTS) {
-			LISTA_NOMBRE_BOTS = listaBotsDefecto.subList(0, NUMBER_OF_BOTS); 
-		} else {
-			LISTA_NOMBRE_BOTS =  listaBotsDefecto;
-			rellenaListaDeBotsAleatoriamente();
+	}
+
+	private List<String> creaListaBots(int tamañoLista, String[] botNames) {
+		Set<String> salida = new HashSet<String>();
+		while (salida.size() < tamañoLista){
+			random = new Random(random.nextLong());
+			salida.add(botNames[random.nextInt(botNames.length)]);
 		}
+		List<String> listaSalida = new ArrayList<String>();
+		for (Object nombre:salida.toArray()){
+			listaSalida.add((String)nombre);
+		}
+		return listaSalida;
 	}
 
 	private void rellenaListaDeBotsAleatoriamente() {
@@ -256,6 +254,15 @@ public class Planetdominos extends UserProgram {
 
 	}
 
+	private class OurMapFileNameFilter implements FilenameFilter {
+
+		@Override
+		public boolean accept(File dir, String name) {
+			return (name.startsWith("ourmap") && name.endsWith(".txt"));
+		}
+
+	}
+	
 	private class BotFileNameFilter implements FilenameFilter {
 
 		@Override
