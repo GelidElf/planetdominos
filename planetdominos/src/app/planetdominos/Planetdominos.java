@@ -100,8 +100,10 @@ public class Planetdominos extends UserProgram {
 	 * @return
 	 */
 	private double fitnessDelBotEnPartida(List<String> botList) {
-		int winner = engine.runGame(game, currentPlayer, botList, false);
-		int turnos = game.gonzaloCaneladaLorenaPrieto_getNumTurns();
+		int winner;
+		int turnos;
+		winner = engine.runGame(game, currentPlayer, botList, false);
+		turnos = game.gonzaloCaneladaLorenaPrieto_getNumTurns();
 		switch (winner) {
 		case 1:
 			// ganamos
@@ -186,10 +188,20 @@ public class Planetdominos extends UserProgram {
 	}
 
 	private void creaListaConBotsPorDefecto() {
+		Set<String> combinacionesUnicas = new HashSet<String>();
 		LISTA_NOMBRE_BOTS = new ArrayList<List<String>>();
 		String[] botNames = ProGenContext.getMandatoryProperty("dominos.fitness.bots").split(",");
+		while(LISTA_NOMBRE_BOTS.size() < NUMBER_OF_BOTS){
+			List<String> listaBots = creaListaBots(3,botNames);
+			String combinacion = listaBots.toString();
+			if (!combinacionesUnicas.contains(combinacion)){
+				combinacionesUnicas.add(combinacion);
+				LISTA_NOMBRE_BOTS.add(listaBots);
+			}
+			
+		}
 		for (int i = 0; i<NUMBER_OF_BOTS ;i++){
-			LISTA_NOMBRE_BOTS.add(creaListaBots(3,botNames));
+			
 		}
 	}
 
